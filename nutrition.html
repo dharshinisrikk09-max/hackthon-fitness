@@ -24,8 +24,8 @@
       --primary-hover: #ff8555;
       --accent: #ea6c36;
       
-      --text-main: #1f2937;
-      --text-muted: #64748b;
+      --text-main: #111827;
+      --text-muted: #374151;
       --border: #e2e8f0;
     }
 
@@ -55,7 +55,7 @@ header{
   z-index:20;
 }
 h1{margin:0;font-size:26px;color:#ea6c36;font-weight:800}
-header .muted{font-size:14px;color:#64748b}
+header .muted{font-size:14px;color:#374151 !important;font-weight:600;}
 
 main{display:block}
 
@@ -111,7 +111,7 @@ input:focus,select:focus{
   border-color:#ea6c36;
   box-shadow:0 0 0 3px rgba(234, 108, 54, 0.15);
 }
-label{font-size:13px;color:#475569;font-weight:600}
+label{font-size:13px;color:#1f2937 !important;font-weight:700}
 .plan{
   display:flex;align-items:center;gap:16px;cursor:pointer;
   transition:.2s;min-height:82px;
@@ -140,7 +140,7 @@ nav button{
   width:100%;
   min-height:58px;
   background:transparent;
-  color:#64748b;
+  color:#1f2937 !important;
   text-align:left;
   padding:12px 18px;
   border-radius:10px;
@@ -165,11 +165,92 @@ nav button.active{color:#ea6c36;background:#fff7ed;border-color:rgba(234, 108, 5
   border-radius:20px;font-size:12px;margin:3px;color:#ea6c36;border:1px solid rgba(234, 108, 54, 0.2);font-weight:600;
 }
 .section-title{margin:26px 0 10px;color:#1f2937}
-.info-box{background:#fff7ed;border-radius:15px;padding:15px;margin-top:12px;border:1px solid rgba(234, 108, 54, 0.25);color:#1f2937}
-.diet-total{text-align:center;font-size:13px;color:#64748b;margin-top:10px}
-.green{color:#ea6c36 !important;font-weight:700}
-.blue{color:#ea6c36 !important;font-weight:700}
-.muted{color:#64748b}
+.info-box{background:#ffffff;border-radius:15px;padding:15px;margin-top:12px;border:1px solid rgba(234, 108, 54, 0.25);color:#1f2937}
+.diet-total{text-align:center;font-size:13px;color:#374151 !important;margin-top:10px;font-weight:600}
+.green{color:#ea6c36;font-weight:700}
+.blue{color:#ea6c36;font-weight:700}
+.muted{color:#374151 !important;font-weight:600;}
+
+/* High Contrast Rules for Hero Cards and Result Cards */
+.hero .stat {
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  padding: 16px !important;
+  border-radius: 14px !important;
+}
+
+.hero .stat small {
+  color: #475569 !important;
+  font-weight: 700 !important;
+  font-size: 13px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+  display: block !important;
+}
+
+.hero .stat h2, .hero .stat h2.green, .hero .stat h2.blue {
+  color: #ea6c36 !important;
+  font-size: 26px !important;
+  font-weight: 800 !important;
+  margin-top: 4px !important;
+}
+
+.hero .info-box {
+  background: #ffffff !important;
+  color: #1f2937 !important;
+  border: 1px solid rgba(234, 108, 54, 0.3) !important;
+  border-radius: 14px !important;
+  padding: 16px !important;
+  margin-top: 14px !important;
+}
+
+.hero .info-box b {
+  color: #ea6c36 !important;
+  font-size: 15px !important;
+  display: block !important;
+}
+
+.hero .info-box p, .hero .info-box .muted {
+  color: #334155 !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  margin-top: 4px !important;
+}
+
+#result .card {
+  background: linear-gradient(135deg, #ea6c36 0%, #ff8555 100%) !important;
+  color: #ffffff !important;
+  padding: 22px !important;
+  border-radius: 16px !important;
+  box-shadow: 0 6px 18px rgba(234, 108, 54, 0.25) !important;
+}
+
+#result .card small {
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  font-size: 13px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.6px !important;
+  display: block !important;
+  opacity: 0.95 !important;
+}
+
+#result #target, #result #target.green {
+  color: #ffffff !important;
+  font-weight: 800 !important;
+  font-size: 32px !important;
+  margin: 6px 0 8px 0 !important;
+  letter-spacing: -0.5px !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) !important;
+}
+
+#result #advice, #result #advice.muted {
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  font-size: 16px !important;
+  display: block !important;
+  opacity: 0.98 !important;
+}
 
 /* Desktop content starts to the right of the sidebar */
 #home,#details,#diet,#gym{margin-left:220px;max-width:none}
@@ -198,6 +279,73 @@ nav button.active{color:#ea6c36;background:#fff7ed;border-color:rgba(234, 108, 5
   section{padding:18px 14px 90px}
   .grid{grid-template-columns:1fr}
 }
+
+/* ================= DARK TEXT / HIGH CONTRAST ================= */
+body { color:#111827 !important; }
+
+.card:not(.hero) { color:#111827; }
+.card:not(.hero) b,
+.card:not(.hero) strong,
+.card:not(.hero) h1,
+.card:not(.hero) h2,
+.card:not(.hero) h3,
+.card:not(.hero) p {
+  color:#111827;
+}
+
+.plan b,
+.meal b,
+.exercise b {
+  color:#111827 !important;
+}
+
+.plan .muted,
+.meal .muted,
+.exercise .muted {
+  color:#374151 !important;
+  font-weight:600;
+}
+
+.section-title {
+  color:#111827 !important;
+}
+
+.diet-total {
+  color:#374151 !important;
+  font-weight:600;
+}
+
+input, select {
+  color:#111827 !important;
+  font-weight:600;
+}
+
+input::placeholder {
+  color:#6b7280 !important;
+  opacity:1 !important;
+}
+
+/* Keep orange hero cards readable with white text */
+.hero,
+.hero h1,
+.hero h2,
+.hero h3,
+.hero p,
+.hero span,
+.hero .muted,
+#result .card,
+#result .card small,
+#result #target,
+#result #advice {
+  color:#ffffff !important;
+}
+
+/* Hero stat/info cards intentionally use dark text on white */
+.hero .stat small { color:#374151 !important; }
+.hero .info-box,
+.hero .info-box p,
+.hero .info-box .muted { color:#111827 !important; }
+
 </style>
 </head>
 
@@ -332,38 +480,36 @@ Calculate My Calories
 
 <div class="grid" style="margin-top:14px">
 
-<div class="stat">
+<div class="stat" style="background:#ffffff !important;padding:16px;border-radius:14px;border:1px solid #cbd5e1;">
 
-<small>BMR</small>
-<br>
+<small style="font-size:12px;color:#475569 !important;-webkit-text-fill-color:#475569 !important;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;display:block;">BMR</small>
 
-<b id="bmr"></b>
-
-</div>
-
-
-<div class="stat">
-
-<small>TDEE</small>
-<br>
-
-<b id="tdee"></b>
-
-</div>
+<b id="bmr" style="font-size:20px;color:#ea6c36 !important;-webkit-text-fill-color:#ea6c36 !important;font-weight:800;display:block;margin-top:4px;"></b>
 
 </div>
 
 
-<div class="card"
-style="margin:14px 0 0;background:linear-gradient(135deg, #ea6c36 0%, #ff8555 100%);color:#ffffff;">
+<div class="stat" style="background:#ffffff !important;padding:16px;border-radius:14px;border:1px solid #cbd5e1;">
 
-<small>
+<small style="font-size:12px;color:#475569 !important;-webkit-text-fill-color:#475569 !important;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;display:block;">TDEE</small>
+
+<b id="tdee" style="font-size:20px;color:#ea6c36 !important;-webkit-text-fill-color:#ea6c36 !important;font-weight:800;display:block;margin-top:4px;"></b>
+
+</div>
+
+</div>
+
+
+<div class="card hero"
+style="margin:14px 0 0;background:linear-gradient(135deg, #ea6c36 0%, #ff8555 100%) !important;color:#ffffff !important;padding:22px;border-radius:16px;box-shadow:0 6px 18px rgba(234,108,54,0.25);">
+
+<small style="font-size:14px;color:#ffffff !important;-webkit-text-fill-color:#ffffff !important;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;display:block;margin-bottom:6px;">
 Recommended target
 </small>
 
-<h2 id="target" class="green"></h2>
+<h2 id="target" style="color:#ffffff !important;-webkit-text-fill-color:#ffffff !important;font-weight:800;font-size:32px;margin:6px 0 8px;letter-spacing:-0.5px;"></h2>
 
-<span id="advice" class="muted"></span>
+<span id="advice" style="color:#ffffff !important;-webkit-text-fill-color:#ffffff !important;font-weight:700;font-size:17px;display:block;"></span>
 
 </div>
 
@@ -878,39 +1024,39 @@ ${ex[2]}
 
 document.getElementById("detailContent").innerHTML=`
 
-<div class="card hero">
+<div class="card hero" style="background:linear-gradient(135deg, #ea6c36 0%, #ff8555 100%) !important;padding:24px;border-radius:16px;">
 
 <div style="font-size:45px">
 ${d.emoji}
 </div>
 
-<h1>
+<h1 style="color:#ffffff !important;-webkit-text-fill-color:#ffffff !important;font-size:28px;font-weight:800;">
 ${d.title}
 </h1>
 
-<p class="muted">
+<p style="color:#ffffff !important;-webkit-text-fill-color:#ffffff !important;font-weight:600;font-size:15px;opacity:0.95;margin-bottom:16px;">
 ${d.subtitle}
 </p>
 
 
 <div class="grid">
 
-<div class="stat">
+<div class="stat" style="background:#ffffff !important;border:1px solid #cbd5e1 !important;padding:16px !important;border-radius:14px !important;">
 
-<small>Calories</small>
+<small style="color:#475569 !important;-webkit-text-fill-color:#475569 !important;font-weight:700 !important;font-size:13px !important;text-transform:uppercase !important;letter-spacing:0.5px !important;display:block !important;">Calories</small>
 
-<h2 class="green">
+<h2 style="color:#ea6c36 !important;-webkit-text-fill-color:#ea6c36 !important;font-weight:800 !important;font-size:28px !important;margin-top:4px !important;">
 ${d.calories} kcal
 </h2>
 
 </div>
 
 
-<div class="stat">
+<div class="stat" style="background:#ffffff !important;border:1px solid #cbd5e1 !important;padding:16px !important;border-radius:14px !important;">
 
-<small>Protein</small>
+<small style="color:#475569 !important;-webkit-text-fill-color:#475569 !important;font-weight:700 !important;font-size:13px !important;text-transform:uppercase !important;letter-spacing:0.5px !important;display:block !important;">Protein</small>
 
-<h2 class="blue">
+<h2 style="color:#ea6c36 !important;-webkit-text-fill-color:#ea6c36 !important;font-weight:800 !important;font-size:28px !important;margin-top:4px !important;">
 ${d.protein} g
 </h2>
 
@@ -919,11 +1065,11 @@ ${d.protein} g
 </div>
 
 
-<div class="info-box">
+<div class="info-box" style="background:#ffffff !important;border:1px solid rgba(234, 108, 54, 0.3) !important;border-radius:14px !important;padding:16px !important;margin-top:14px !important;">
 
-<b>🎯 Daily Target</b>
+<b style="color:#ea6c36 !important;-webkit-text-fill-color:#ea6c36 !important;font-size:15px !important;display:block !important;">🎯 Daily Target</b>
 
-<p class="muted">
+<p style="color:#1f2937 !important;-webkit-text-fill-color:#1f2937 !important;font-weight:600 !important;font-size:14.5px !important;margin-top:4px !important;">
 Aim for approximately
 ${d.calories} calories and
 ${d.protein}g protein per day.
@@ -1109,17 +1255,19 @@ document.getElementById("tdee")
 .textContent=
 Math.round(tdee)+" kcal";
 
+const targetEl = document.getElementById("target");
+if(targetEl){
+  targetEl.className = "";
+  targetEl.textContent = Math.round(target)+" kcal/day";
+  targetEl.style.cssText = "color: #ffffff !important; -webkit-text-fill-color: #ffffff !important; font-weight: 800 !important; font-size: 32px !important; margin: 6px 0 8px 0 !important; display: block !important;";
+}
 
-document.getElementById("target")
-.textContent=
-Math.round(target)+" kcal/day";
-
-
-document.getElementById("advice")
-.textContent=
-"Suggested protein: "+
-Math.round(protein)+
-" g/day";
+const adviceEl = document.getElementById("advice");
+if(adviceEl){
+  adviceEl.className = "";
+  adviceEl.textContent = "Suggested protein: "+ Math.round(protein)+ " g/day";
+  adviceEl.style.cssText = "color: #ffffff !important; -webkit-text-fill-color: #ffffff !important; font-weight: 700 !important; font-size: 17px !important; display: block !important;";
+}
 
 
 document.getElementById("homeCal")
