@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coaching Room - {{ trainer.name }} | FitPro</title>
+  <link rel="stylesheet" href="/static/hackpro/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body data-trainer-id="{{ trainer.id }}" data-trainer-name="{{ trainer.name }}">
+
+  <!-- Top Navigation -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="/" class="brand">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M20.57 14.86L22 13.43L20.57 12L17 15.57L8.43 7L12 3.43L10.57 2L9.14 3.43L7.71 2L5.57 4.14L4.14 2.71L2.71 4.14L4.14 5.57L2 7.71L3.43 9.14L2 10.57L3.43 12L7 8.43L15.57 17L12 20.57L13.43 22L14.86 20.57L16.29 22L18.43 19.86L19.86 21.29L21.29 19.86L19.86 18.43L22 16.29L20.57 14.86Z"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1>FITPRO<span>COACHING PORTAL</span></h1>
+        </div>
+      </a>
+
+      <!-- Status Bar -->
+      <div class="quota-bar">
+        <div class="quota-chip">
+          <div class="quota-dot"></div>
+          <span>Active Tutor:</span>
+          <span class="quota-count">{{ trainer.name }}</span>
+        </div>
+        <div class="quota-chip danger-chip" title="Remaining times you can discontinue your journey">
+          <div class="quota-dot"></div>
+          <span>Discontinues Left:</span>
+          <span id="discontRemainingDisplay" class="quota-count">{{ discontinues_remaining }} / {{ max_discontinuations }}</span>
+        </div>
+        <a href="/experts/" class="btn btn-outline btn-sm">All Trainers ↗</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container coach-page-wrapper">
+    <a href="/experts/" class="back-link">
+      <span>←</span> Back to All Personal Trainers
+    </a>
+
+    <div class="coach-dashboard-grid">
+      <!-- Left Column: Trainer Bio & Phone Call Console -->
+      <div style="display: flex; flex-direction: column; gap: 24px;">
+        
+        <!-- Coach Summary Card -->
+        <div class="coach-summary-card">
+          <div class="coach-header-center">
+            <img src="{{ trainer.icon }}" alt="{{ trainer.name }}" class="coach-avatar-large">
+            <h2>{{ trainer.name }}</h2>
+            <div class="field-title">{{ trainer.specialized_field }}</div>
+            <div style="margin-top: 8px;">
+              <span class="trainer-tag">{{ trainer.experience }} Experience</span>
+              <span class="trainer-tag" style="background: rgba(251, 191, 36, 0.15); color: #fbbf24;">★ {{ trainer.rating }} Rating</span>
+            </div>
+          </div>
+
+          <div class="detail-section">
+            <h5>Major Career Achievements</h5>
+            <p>{{ trainer.major_achievements }}</p>
+          </div>
+
+          <div class="detail-section">
+            <h5>Philosophy & Client Feedback</h5>
+            <p>“{{ trainer.client_feedback }}”</p>
+          </div>
+        </div>
+
+        <!-- Interactive Phone Call Console -->
+        <div class="call-console-card">
+          <div id="callStatusBadge" class="call-status-badge">
+            <span>⚡</span> Direct Voice Call Ready
+          </div>
+
+          <div id="callTimerDisplay" class="call-timer">00:00</div>
+
+          <!-- Audio Wave Visualizer -->
+          <div id="audioWaves" class="audio-waves">
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+          </div>
+
+          <!-- Phone Controls -->
+          <div class="call-controls">
+            <button id="callBtnDial" class="btn call-btn-dial">
+              <span>📞</span> Call Coach Now
+            </button>
+
+            <div id="callControlsActive" style="display: none; align-items: center; gap: 14px;">
+              <button id="callBtnMute" class="call-btn call-btn-action" title="Mute Microphone">
+                🎙️
+              </button>
+              <button id="callBtnHangup" class="call-btn call-btn-hangup" title="End Call">
+                🛑
+              </button>
+              <button id="callBtnSpeaker" class="call-btn call-btn-action active" title="Speaker Audio Mode">
+                🔊
+              </button>
+            </div>
+          </div>
+
+          <p style="margin-top: 16px; font-size: 0.78rem; color: var(--text-muted);">
+            Encrypted 1-on-1 audio channel &bull; Direct gym coaching access
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Right Column: Feedback, Reviews & Discontinue Flow -->
+      <div style="display: flex; flex-direction: column; gap: 24px;">
+        
+        <!-- Feedback & Reviews Card -->
+        <div class="reviews-card">
+          <div class="reviews-header">
+            <div>
+              <h3>Client Feedback & Reviews</h3>
+              <p style="font-size: 0.82rem; color: var(--text-muted);">Real trainee experiences & testimonials</p>
+            </div>
+            <span style="color: var(--neon-green); font-weight: 700; font-size: 0.9rem;">
+              {{ reviews|length }} Verified Reviews
+            </span>
+          </div>
+
+          <!-- Add Review Form -->
+          <form id="reviewForm" class="review-form">
+            <h4>Leave Trainee Feedback</h4>
+            
+            <div class="form-group">
+              <input type="text" id="reviewAuthor" class="form-input" placeholder="Your Name or Athlete Handle (optional)" maxlength="50">
+            </div>
+
+            <div class="rating-select-row">
+              <span style="font-size: 0.85rem; color: var(--text-secondary); font-weight: 600;">Your Rating:</span>
+              <div class="star-rating" id="starRating">
+                <span data-val="1" class="active">★</span>
+                <span data-val="2" class="active">★</span>
+                <span data-val="3" class="active">★</span>
+                <span data-val="4" class="active">★</span>
+                <span data-val="5" class="active">★</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <textarea id="reviewComment" class="form-textarea" placeholder="Share your experience with this coach's training regimen, nutrition cues, or injury prevention..." required></textarea>
+            </div>
+
+            <button type="submit" id="submitReviewBtn" class="btn btn-primary btn-sm">
+              Submit Feedback
+            </button>
+          </form>
+
+          <!-- List of Reviews -->
+          <div id="reviewsList" class="reviews-list">
+            {% for r in reviews %}
+            <div class="review-item">
+              <div class="review-meta">
+                <span class="review-author">{{ r.author }}</span>
+                <span class="review-date">{{ r.date }}</span>
+              </div>
+              <div class="review-stars">
+                {% for i in range(r.rating) %}★{% endfor %}{% for i in range(5 - r.rating) %}☆{% endfor %}
+              </div>
+              <p class="review-comment">{{ r.comment }}</p>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+
+        <!-- Discontinue Fitness Journey Safeguard Box -->
+        <div class="discontinue-card">
+          <div class="discontinue-info">
+            <h4>Feeling Uncomfortable with Your Fitness Journey?</h4>
+            <p>
+              If your workout pace or training style isn't matching your expectations, you can discontinue your journey with {{ trainer.name }}. You will be able to select a new tutor from the roster.
+            </p>
+            <div style="margin-top: 8px; font-size: 0.8rem; color: #ff8888; font-weight: 700;">
+              ⚠️ Policy Restriction: Maximum {{ max_discontinuations }} discontinuations allowed per user ({{ discontinues_remaining }} remaining).
+            </div>
+          </div>
+          <button id="btnDiscontinue" class="btn btn-danger">
+            Discontinue Coaching ✕
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal: Discontinue Confirmation Safeguard -->
+  <div id="discontinueModal" class="modal-overlay" role="dialog" aria-modal="true">
+    <div class="modal-box remembrance-box">
+      <div class="remembrance-icon" style="background: rgba(239, 68, 68, 0.15); border-color: var(--accent-danger);">
+        ⚠️
+      </div>
+      <h3 class="remembrance-title">Confirm Discontinuation</h3>
+      <p class="remembrance-msg">
+        Are you sure you want to discontinue your training journey with <strong>{{ trainer.name }}</strong>?<br><br>
+        Remember, you have only <strong>{{ discontinues_remaining }}</strong> out of {{ max_discontinuations }} discontinuation change(s) remaining!
+      </p>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+        <button id="cancelDiscontinue" class="btn btn-outline">Keep Coaching</button>
+        <button id="confirmDiscontinue" class="btn btn-danger">Yes, Discontinue</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Remembrance Alert Dialog -->
+  <div id="remembranceModal" class="modal-overlay" role="dialog" aria-modal="true">
+    <div class="modal-box remembrance-box">
+      <div id="remembranceIcon" class="remembrance-icon">⛔</div>
+      <h3 id="remembranceTitle" class="remembrance-title">Policy Remembrance</h3>
+      <p id="remembranceMsg" class="remembrance-msg">Limit notification text.</p>
+      <button id="closeRemembrance" class="btn btn-primary btn-block">Got It</button>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <p>FitPro Gym & Athlete Network &bull; <strong>Personal Tutor Coaching Room</strong> &bull; Black & Neon Green Edition</p>
+    </div>
+  </footer>
+
+  <script src="/static/hackpro/js/coach.js"></script>
+</body>
+</html>

@@ -1,0 +1,1355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FitPulse - Fitness Platform</title>
+  
+  <!-- Google Fonts: Inter & Poppins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+                    :root {
+      /* Palette: Vibrant Fitness Orange & Crisp Clean White */
+      --bg-outside: #f4f5f7;
+      --app-bg: #f8f9fa;
+      --sidebar-bg: #ffffff;
+      --bg-primary: #f8f9fa;
+      --bg: #f8f9fa;
+      
+      /* Surfaces / Cards */
+      --card-bg: #ffffff;
+      --card-inner: #f8fafc;
+      --input-bg: #ffffff;
+      --bg-surface: #ffffff;
+      --bg-surface-elevated: #f8fafc;
+      --bg-card: #ffffff;
+      --bg-card-hover: #fff7ed;
+      --card-hover: #fff7ed;
+      
+      /* Primary Accents (Orange Theme) */
+      --neon-cyan: #ea6c36;
+      --forest-green-start: #ea6c36;
+      --forest-green-end: #c2410c;
+      --neon-cyan-glow: rgba(234, 108, 54, 0.35);
+      --primary: #ea6c36;
+      --secondary: #ff8555;
+      --primary-dim: rgba(234, 108, 54, 0.15);
+      --primary-glow: rgba(234, 108, 54, 0.4);
+      --secondary-dim: rgba(234, 108, 54, 0.1);
+      --grad-hero: linear-gradient(135deg, #ea6c36 0%, #ff8555 100%);
+      --border-active: #ea6c36;
+      --accent-cyan: #ea6c36;
+      
+      /* Tertiary Accents / Buttons (Orange Theme) */
+      --neon-green: #ea6c36;
+      --accent-green: #ea6c36;
+      --neon-green-hover: #ff8555;
+      --accent-green-hover: #ff8555;
+      --neon-green-glow: rgba(234, 108, 54, 0.4);
+      --accent-green-light: rgba(234, 108, 54, 0.12);
+      --crowd-low: #ea6c36;
+      --crowd-mid: #f59e0b;
+      --crowd-high: #ef4444;
+      --accent: #ea6c36;
+      --accent-dim: rgba(234, 108, 54, 0.15);
+      --grad-warm: linear-gradient(135deg, #ea6c36 0%, #ff8555 100%);
+      --neon-emerald: #ff8555;
+      --neon-glow: rgba(234, 108, 54, 0.4);
+      --accent-danger: #ef4444;
+      --accent-danger-glow: rgba(239, 68, 68, 0.4);
+
+      /* Text Colors (Dark for Light Theme) */
+      --text-main: #1f2937;
+      --text-primary: #1f2937;
+      --text-muted: #64748b;
+      --text-secondary: #475569;
+      --text-dim: #94a3b8;
+      --ink: #1f2937;
+      --ink-soft: #475569;
+      --dim: #94a3b8;
+      
+      /* Borders */
+      --input-border: #e2e8f0;
+      --border-color: #e2e8f0;
+      --border-dim: #f1f5f9;
+      --border-subtle: #f1f5f9;
+      --border: #e2e8f0;
+      --border-hover: #ea6c36;
+
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --radius-full: 9999px;
+
+      --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 8px 24px rgba(234, 108, 54, 0.08);
+      --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.05);
+      --shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.04);
+
+      --font-main: 'Plus Jakarta Sans', 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Poppins', 'Inter', sans-serif;
+      background-color: var(--bg-outside);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    /* Page View Containers */
+    .view-section {
+      width: 100%;
+      max-width: 1240px;
+      display: none;
+    }
+
+    .view-section.active-view {
+      display: flex;
+    }
+
+    /* ================= VIEW 1: LOGIN & REGISTRATION ================= */
+    .auth-frame {
+      width: 100%;
+      max-width: 1080px;
+      margin: 0 auto;
+      background: var(--app-bg);
+      border-radius: 28px;
+      border: 2px solid var(--border-color);
+      box-shadow: 0 0 35px rgba(234, 108, 54, 0.15), 0 25px 60px rgba(0, 0, 0, 0.9);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+    }
+
+    .auth-hero-panel {
+      position: relative;
+      background: url('https://images.unsplash.com/photo-1517838277536-f5f99be501cd?q=80&w=1200&auto=format&fit=crop') center/cover no-repeat;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 40px 32px;
+      min-height: 620px;
+    }
+
+    .auth-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(16, 21, 29, 0.3) 0%, rgba(16, 21, 29, 0.88) 75%, var(--app-bg) 100%);
+      z-index: 1;
+    }
+
+    .auth-hero-content { position: relative; z-index: 2; }
+
+    .brand-header-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--text-main, #1a1a1a);
+      margin-bottom: 12px;
+    }
+
+    .brand-header-logo svg { color: var(--neon-green); }
+    .auth-hero-tagline { font-size: 14px; color: var(--text-muted); line-height: 1.5; margin-bottom: 24px; }
+
+    .auth-hero-stats {
+      display: flex;
+      gap: 18px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border-dim);
+    }
+
+    .auth-stat h4 { font-size: 18px; font-weight: 700; color: var(--neon-green); }
+    .auth-stat p { font-size: 10px; color: var(--text-muted); text-transform: uppercase; }
+
+    .auth-form-panel {
+      padding: 36px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      overflow-y: auto;
+      max-height: 90vh;
+    }
+
+    .auth-toggle-pill {
+      background: var(--input-bg);
+      border: 1px solid var(--input-border);
+      border-radius: 30px;
+      padding: 4px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px;
+      margin-bottom: 20px;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 9px 16px;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .tab-btn.active {
+      background: var(--neon-green);
+      color: #ffffff;
+      box-shadow: 0 0 15px var(--neon-green-glow);
+    }
+
+    .form-title-wrap { margin-bottom: 18px; }
+    .form-title-wrap h2 { font-size: 22px; font-weight: 800; color: var(--text-main, #1a1a1a); }
+    .form-title-wrap h2 span { color: var(--neon-green); }
+    .form-title-wrap p { font-size: 12px; color: var(--text-muted); margin-top: 3px; }
+
+    .form-grid { display: flex; flex-direction: column; gap: 12px; }
+    .form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .field-group { display: flex; flex-direction: column; gap: 5px; }
+    .field-label { font-size: 11.5px; font-weight: 600; color: #cbd5e1; display: flex; justify-content: space-between; align-items: center; }
+    .unit-toggle { font-size: 10px; color: var(--text-muted); cursor: pointer; }
+    .unit-toggle span.active-unit { color: var(--neon-green); font-weight: 700; }
+
+    .form-input, .form-select {
+      width: 100%;
+      background: var(--input-bg);
+      border: 1px solid var(--input-border);
+      border-radius: 10px;
+      color: var(--text-main);
+      font-size: 12.5px;
+      padding: 9px 12px;
+      font-family: inherit;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .form-input:focus, .form-select:focus {
+      border-color: var(--neon-green);
+      box-shadow: 0 0 0 2px rgba(234, 108, 54, 0.18);
+      background: #ffffff;
+    }
+
+    .goals-wrapper { display: flex; flex-wrap: wrap; gap: 6px; }
+    .goal-chip {
+      background: var(--input-bg);
+      border: 1px solid var(--input-border);
+      color: var(--text-muted);
+      border-radius: 16px;
+      padding: 5px 12px;
+      font-size: 11px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .goal-chip.selected {
+      background: var(--neon-green);
+      color: #ffffff;
+      border-color: var(--neon-green);
+      font-weight: 700;
+      box-shadow: 0 0 10px var(--neon-green-glow);
+    }
+
+    .btn-submit-auth {
+      margin-top: 6px;
+      width: 100%;
+      background: var(--neon-green);
+      color: #ffffff;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      padding: 13px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 0 0 20px var(--neon-green-glow);
+      transition: all 0.2s ease;
+    }
+
+    .btn-submit-auth:hover {
+      background: var(--neon-green-hover);
+      transform: translateY(-1px);
+    }
+
+    .footer-auth-switch {
+      text-align: center;
+      margin-top: 14px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .footer-auth-switch a {
+      color: var(--neon-green);
+      text-decoration: none;
+      font-weight: 600;
+      margin-left: 4px;
+      cursor: pointer;
+    }
+
+    .signup-only { display: contents; }
+    .signin-active .signup-only { display: none !important; }
+
+    /* ================= VIEW 2: HOME PAGE DASHBOARD ================= */
+    .app-frame {
+      width: 100%;
+      background: var(--app-bg);
+      border-radius: 28px;
+      border: 2px solid var(--border-color);
+      box-shadow: 0 0 35px rgba(234, 108, 54, 0.15), 0 25px 60px rgba(0, 0, 0, 0.9);
+      overflow: hidden;
+      display: flex;
+    }
+
+    .sidebar {
+      width: 72px;
+      background: var(--sidebar-bg);
+      border-right: 1px solid var(--border-dim);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 0;
+    }
+
+    .nav-icons {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      margin-top: 40px;
+      flex: 1;
+    }
+
+    .nav-item {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+
+    .nav-item:hover { color: var(--text-main, #1a1a1a); background: var(--card-inner); }
+    .nav-item.active {
+      background: rgba(234, 108, 54, 0.15);
+      border: 1px solid var(--neon-green);
+      color: var(--neon-green);
+      box-shadow: 0 0 15px var(--neon-green-glow);
+    }
+
+    .logout-item { margin-top: auto; color: var(--text-dim); cursor: pointer; }
+    .logout-item:hover { color: #ef4444; }
+
+    .main-content {
+      flex: 1;
+      padding: 28px 36px 20px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 28px;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-main, #1a1a1a);
+      text-decoration: none;
+    }
+
+    .brand-logo svg { color: var(--neon-green); }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .nav-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 13.5px;
+      font-weight: 500;
+      position: relative;
+    }
+
+    .nav-link.active { color: var(--neon-green); }
+    .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--neon-green);
+      border-radius: 2px;
+      box-shadow: 0 0 8px var(--neon-green);
+    }
+
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      background: var(--card-inner);
+      padding: 4px 12px 4px 4px;
+      border-radius: 20px;
+      border: 1px solid var(--border-dim);
+    }
+
+    .user-avatar-badge {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--neon-green);
+      color: var(--card-bg);
+      font-weight: 800;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .user-title {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--text-main, #1a1a1a);
+    }
+
+    .hero-section {
+      text-align: center;
+      position: relative;
+      margin-bottom: 26px;
+    }
+
+    .hero-title {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--text-main, #1a1a1a);
+      letter-spacing: -0.5px;
+      margin-bottom: 4px;
+    }
+
+    .hero-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    .btn-switch-auth {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      background: var(--neon-green);
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 10px 22px;
+      border-radius: 20px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 0 20px var(--neon-green-glow);
+      transition: all 0.2s;
+    }
+
+    .btn-switch-auth:hover {
+      background: #4efc9d;
+      transform: translateY(-50%) scale(1.03);
+    }
+
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-bottom: 20px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid rgba(234, 108, 54, 0.3);
+      border-radius: 18px;
+      padding: 18px 20px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: inset 0 0 20px rgba(234, 108, 54, 0.03);
+    }
+
+    .card:hover { border-color: var(--neon-green); }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .card-title { font-size: 14px; font-weight: 700; color: var(--text-main, #1a1a1a); }
+    .card-dots { color: var(--text-dim); font-size: 14px; letter-spacing: 2px; }
+
+    /* CARD 1 */
+    .summary-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .summary-label { font-size: 12px; color: var(--text-muted); }
+    .calories-badge {
+      background: rgba(234, 108, 54, 0.15);
+      border: 1px solid rgba(234, 108, 54, 0.4);
+      color: var(--neon-green);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 12px;
+    }
+
+    .macros-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+    .macro-col h5 { font-size: 11px; color: var(--text-muted); font-weight: 500; margin-bottom: 4px; }
+    .macro-bar { height: 4px; background: #e2e8f0; border-radius: 3px; overflow: hidden; margin-bottom: 4px; }
+    .macro-bar-fill { height: 100%; border-radius: 3px; }
+    .fill-protein { width: 70%; background: var(--neon-cyan); box-shadow: 0 0 8px var(--neon-cyan); }
+    .fill-carbs { width: 85%; background: var(--neon-green); box-shadow: 0 0 8px var(--neon-green); }
+    .fill-fat { width: 50%; background: #3b82f6; }
+    .macro-val { font-size: 12px; font-weight: 700; color: var(--text-main, #1a1a1a); }
+
+    .meal-section-title { font-size: 11px; color: var(--text-muted); margin-bottom: 8px; }
+    .meals-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+    .meal-box { background: var(--card-inner); border-radius: 8px; padding: 8px 4px; text-align: center; }
+    .meal-name { font-size: 10.5px; color: var(--text-muted); margin-bottom: 2px; }
+    .meal-time { font-size: 11px; font-weight: 700; color: var(--text-main, #1a1a1a); }
+
+    /* CARD 2 */
+    .procoach-subtitles { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-muted); margin-bottom: 10px; }
+    .coaches-row { display: flex; gap: 12px; align-items: center; margin-bottom: 14px; }
+    .coach-item { display: flex; flex-direction: column; align-items: center; text-align: center; flex: 1; }
+    .coach-avatar-wrap { position: relative; margin-bottom: 4px; }
+    .coach-img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; border: 1.5px solid var(--neon-green); }
+    .check-icon {
+      position: absolute; bottom: 0; right: 0;
+      background: var(--neon-green); color: var(--card-bg);
+      width: 14px; height: 14px; border-radius: 50%;
+      font-size: 9px; font-weight: bold;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .coach-name { font-size: 11px; font-weight: 600; color: var(--text-main, #1a1a1a); }
+    .slots-box { background: var(--card-inner); border-radius: 8px; padding: 8px 12px; text-align: center; }
+    .slot-day { font-size: 11px; color: var(--text-muted); }
+    .slot-time { font-size: 12px; font-weight: 700; color: var(--text-main, #1a1a1a); }
+    .coach-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: auto; }
+    .btn-book { background: var(--neon-green); color: #ffffff; border: none; font-size: 11px; font-weight: 700; padding: 8px; border-radius: 8px; cursor: pointer; }
+    .btn-msg { background: transparent; border: 1px solid var(--border-dim); color: var(--text-main, #1a1a1a); font-size: 11px; font-weight: 600; padding: 8px; border-radius: 8px; cursor: pointer; }
+
+    /* CARD 3 */
+    .map-preview { height: 140px; background: #f8fafc; border-radius: 10px; position: relative; overflow: hidden; border: 1px solid var(--border-dim); }
+    .map-grid {
+      position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+    .map-pin {
+      position: absolute; background: #ffffff; box-shadow: 0 2px 8px rgba(234, 108, 54, 0.2);
+      border: 1px solid var(--neon-green); padding: 3px 7px;
+      border-radius: 12px; font-size: 10px; color: var(--text-main, #1a1a1a);
+      display: flex; align-items: center; gap: 4px;
+      box-shadow: 0 0 10px var(--neon-green-glow);
+    }
+    .map-pin.purple { border-color: #a855f7; box-shadow: 0 0 10px rgba(168, 85, 247, 0.4); }
+    .map-pin-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--neon-green); }
+    .map-pin.purple .map-pin-dot { background: #a855f7; }
+    .pin-crunch { top: 22px; left: 40px; }
+    .pin-anytime-r { top: 60px; right: 20px; }
+    .pin-anytime-l { bottom: 15px; left: 20px; }
+    .target-icon { position: absolute; bottom: 8px; right: 8px; color: var(--text-dim); font-size: 12px; }
+
+    /* CARD 4 */
+    .ai-content-row { display: grid; grid-template-columns: 1fr 1.3fr; gap: 10px; align-items: center; }
+    .skeleton-view { height: 140px; display: flex; align-items: center; justify-content: center; }
+    .ai-stats-list { display: flex; flex-direction: column; gap: 8px; }
+    .ai-stat-box { background: var(--card-inner); border-radius: 8px; padding: 8px; }
+    .ai-stat-box h6 { font-size: 9.5px; color: var(--text-dim); font-weight: 500; }
+    .ai-stat-val { font-size: 12px; font-weight: 700; color: var(--text-main, #1a1a1a); margin-top: 2px; }
+    .ai-stat-bar { height: 3px; background: #e2e8f0; border-radius: 2px; margin-top: 4px; overflow: hidden; }
+    .ai-stat-bar-fill { width: 80%; height: 100%; background: var(--neon-green); }
+
+    /* CARD 5 */
+    .recovery-list { display: flex; flex-direction: column; gap: 8px; }
+    .rec-item {
+      background: var(--card-inner); border-radius: 8px;
+      padding: 8px 12px; display: flex;
+      align-items: center; justify-content: space-between;
+    }
+    .rec-item-left { display: flex; align-items: center; gap: 8px; }
+    .rec-icon-svg { color: var(--neon-green); font-size: 16px; }
+    .rec-texts h6 { font-size: 9.5px; color: var(--text-dim); font-weight: 500; }
+    .rec-texts p { font-size: 11px; font-weight: 700; color: var(--text-main, #1a1a1a); }
+    .rec-bar { width: 50px; height: 4px; background: #e2e8f0; border-radius: 2px; overflow: hidden; }
+    .rec-bar-fill { width: 85%; height: 100%; background: var(--neon-green); }
+    .breath-play-btn {
+      width: 34px; height: 34px; border-radius: 50%;
+      background: var(--neon-green); color: var(--card-bg);
+      border: none; display: flex; align-items: center;
+      justify-content: center; font-size: 12px; cursor: pointer;
+      box-shadow: 0 0 15px var(--neon-green-glow);
+    }
+
+    /* CARD 6: YouTube Workout Vault */
+    .yt-vault-content {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      height: 100%;
+    }
+
+    .yt-player-preview {
+      position: relative;
+      width: 100%;
+      height: 125px;
+      background: #000;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--border-dim);
+    }
+
+    .yt-player-preview iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .yt-quick-tabs {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding-bottom: 2px;
+    }
+    .yt-quick-tabs::-webkit-scrollbar { display: none; }
+
+    .yt-tab-chip {
+      background: var(--card-inner);
+      border: 1px solid var(--border-dim);
+      color: var(--text-muted);
+      border-radius: 6px;
+      padding: 4px 8px;
+      font-size: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+
+    .yt-tab-chip:hover {
+      color: var(--text-main, #1a1a1a);
+      border-color: var(--neon-green);
+    }
+
+    .yt-tab-chip.active {
+      background: rgba(234, 108, 54, 0.15);
+      color: var(--neon-green);
+      border-color: var(--neon-green);
+    }
+
+    .yt-vault-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: auto;
+      padding-top: 6px;
+      border-top: 1px solid var(--border-dim);
+    }
+
+    .yt-source-info {
+      font-size: 10.5px;
+      color: var(--text-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 60%;
+    }
+    .yt-source-info span {
+      color: var(--text-main, #1a1a1a);
+      font-weight: 600;
+    }
+
+    .btn-open-vault {
+      background: transparent;
+      border: 1px solid var(--neon-green);
+      color: var(--neon-green);
+      font-size: 10px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 6px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-open-vault:hover {
+      background: var(--neon-green);
+      color: #ffffff;
+      box-shadow: 0 0 10px var(--neon-green-glow);
+    }
+
+    .footer-font-info { text-align: center; font-size: 11px; color: var(--text-dim); margin-top: 4px; }
+
+    @media (max-width: 1000px) {
+      .auth-frame { grid-template-columns: 1fr; }
+      .bento-grid { grid-template-columns: 1fr; }
+      .sidebar, .nav-menu { display: none; }
+    }
+  </style>
+  <link rel="stylesheet" href="/static/css/aurafit_chat.css">
+</head>
+<body>
+
+  <!-- ================= 1. LOGIN / SIGN UP VIEW (SHOWN FIRST) ================= -->
+  <section class="view-section active-view" id="viewAuth">
+    <div class="auth-frame">
+      
+      <!-- Hero Art -->
+      <div class="auth-hero-panel">
+        <div class="auth-hero-overlay"></div>
+        <div class="auth-hero-content">
+          <div class="brand-header-logo">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+            <span>FitPulse</span>
+          </div>
+          <p class="auth-hero-tagline">Unleash Your Ultimate Potential. AI nutrition, motion tracking workouts, and unified achievements.</p>
+
+          <div class="auth-hero-stats">
+            <div class="auth-stat"><h4>50k+</h4><p>Athletes</p></div>
+            <div class="auth-stat"><h4>100+</h4><p>Programs</p></div>
+            <div class="auth-stat"><h4>98%</h4><p>Results</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Auth Form -->
+      <div class="auth-form-panel">
+        <div class="auth-toggle-pill">
+          <button type="button" class="tab-btn" id="tabSignInBtn" onclick="setMode('signin')">Sign In</button>
+          <button type="button" class="tab-btn active" id="tabSignUpBtn" onclick="setMode('signup')">Create Account</button>
+        </div>
+
+        <div class="form-title-wrap">
+          <h2 id="formHeading">Get Started: <span>Join FitPulse</span></h2>
+          <p id="formSubheading">Enter your details to generate your tailored fitness profile.</p>
+        </div>
+
+        <form id="authForm" onsubmit="handleAuthSubmit(event)">
+          <div class="form-grid">
+            
+            <!-- Full Name & Email -->
+            <div class="form-row-2">
+              <div class="field-group signup-only">
+                <label class="field-label">Full Name</label>
+                <input type="text" class="form-input" id="inputFullName" placeholder="e.g. Sarah Chen" value="Sarah Chen" required />
+              </div>
+
+              <div class="field-group">
+                <label class="field-label" id="emailLabel">Email Address</label>
+                <input type="email" class="form-input" id="inputEmail" placeholder="name@email.com" value="sarah@fitpulse.com" required />
+              </div>
+            </div>
+
+            <!-- Phone & DOB -->
+            <div class="form-row-2 signup-only">
+              <div class="field-group">
+                <label class="field-label">Phone Number</label>
+                <input type="tel" class="form-input" id="inputPhone" placeholder="+1 (555) 000-0000" value="+1 (555) 019-2834" />
+              </div>
+
+              <div class="field-group">
+                <label class="field-label">Date of Birth</label>
+                <input type="date" class="form-input" id="inputDob" value="1998-07-15" />
+              </div>
+            </div>
+
+            <!-- Height & Weight -->
+            <div class="form-row-2 signup-only">
+              <div class="field-group">
+                <div class="field-label">
+                  <span>Height</span>
+                  <span class="unit-toggle" onclick="toggleHeightUnit()">
+                    <span id="uCm" class="active-unit">cm</span> / <span id="uFt">ft</span>
+                  </span>
+                </div>
+                <input type="number" step="0.1" class="form-input" id="inputHeight" placeholder="168" value="168" />
+              </div>
+
+              <div class="field-group">
+                <div class="field-label">
+                  <span>Weight</span>
+                  <span class="unit-toggle" onclick="toggleWeightUnit()">
+                    <span id="uKg" class="active-unit">kg</span> / <span id="uLbs">lbs</span>
+                  </span>
+                </div>
+                <input type="number" step="0.1" class="form-input" id="inputWeight" placeholder="62.5" value="62.5" />
+              </div>
+            </div>
+
+            <!-- Goals -->
+            <div class="field-group signup-only">
+              <label class="field-label">Primary Fitness Goal</label>
+              <div class="goals-wrapper">
+                <span class="goal-chip" onclick="pickGoal(this)">Weight Loss</span>
+                <span class="goal-chip selected" onclick="pickGoal(this)">Muscle Building</span>
+                <span class="goal-chip" onclick="pickGoal(this)">Endurance</span>
+                <span class="goal-chip" onclick="pickGoal(this)">Flexibility & Yoga</span>
+              </div>
+            </div>
+
+            <!-- Health Issues -->
+            <div class="field-group signup-only">
+              <label class="field-label">Health Issues / Medical Alert</label>
+              <select class="form-select" id="inputHealth">
+                <option value="none">None reported (Healthy & Ready)</option>
+                <option value="asthma">Asthma / Respiratory Sensitivity</option>
+                <option value="joint_pain">Knee / Joint / Lower Back Sensitivity</option>
+                <option value="heart_bp">Hypertension / Heart Rate Alert</option>
+                <option value="diabetes">Diabetes / Blood Sugar Regulation</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            <!-- Password -->
+            <div class="form-row-2">
+              <div class="field-group">
+                <label class="field-label">Password</label>
+                <input type="password" class="form-input" id="inputPassword" placeholder="••••••••" value="fitness2026" required />
+              </div>
+
+              <div class="field-group signup-only">
+                <label class="field-label">Confirm Password</label>
+                <input type="password" class="form-input" id="inputConfirmPassword" placeholder="••••••••" value="fitness2026" />
+              </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn-submit-auth" id="btnSubmitAuth">START YOUR JOURNEY ➔</button>
+
+          </div>
+        </form>
+
+        <div class="footer-auth-switch">
+          <span id="footerText">Already have an account?</span>
+          <a id="footerLink" onclick="toggleMode()">Sign In</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ================= 2. HOME PAGE DASHBOARD ================= -->
+  <section class="view-section" id="viewHome">
+    <div class="app-frame">
+      
+      <!-- Left Sidebar -->
+      <aside class="sidebar">
+        <div class="nav-icons">
+          <a class="nav-item" title="Home" onclick="showDashboard()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+          </a>
+          <a class="nav-item active" title="Dashboard">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+          </a>
+          <a class="nav-item" title="Workouts" onclick="event.stopPropagation(); alert('Workout programs module.')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 5v14M18 5v14M2 9v6M22 9v6M6 12h12"></path></svg>
+          </a>
+          <a class="nav-item" title="Timer" onclick="event.stopPropagation(); alert('Interval timer active.')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 16 14"></polyline></svg>
+          </a>
+          <a class="nav-item" title="Analytics" onclick="event.stopPropagation(); alert('Analytics view.')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
+          </a>
+          <a class="nav-item" title="Community" onclick="event.stopPropagation(); alert('Community leaderboard.')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          </a>
+          <a class="nav-item" title="Profile" onclick="showAuthPage('signin')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          </a>
+        </div>
+
+        <a class="nav-item logout-item" title="Sign Out / Switch Account" onclick="showAuthPage('signin')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+        </a>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        
+        <!-- Navbar -->
+        <header class="navbar">
+          <div class="brand-logo">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+            <span>FitPulse</span>
+          </div>
+
+          <nav class="nav-menu">
+            <a class="nav-link active" href="/">Dashboard</a>
+            <a class="nav-link" href="/fitness">Workouts</a>
+            <a class="nav-link" href="/nutrition">Nutrition</a>
+            <a class="nav-link" href="/experts">Coaches</a>
+            <a class="nav-link" href="/stressless">StressLess</a>
+            <a class="nav-link" href="/youtube">YouTube Vault</a>
+            <a class="nav-link" href="javascript:void(0)" onclick="openAuraFitChat()" title="Open AuraFit AI Coach" style="color: #F26A2E; font-weight: 700;">💬 AI Coach</a>
+          </nav>
+
+          <!-- Dynamic User Profile (Shows User's Entered Name) -->
+          <div class="user-profile" onclick="showAuthPage('signin')" title="Click to switch account / logout">
+            <div class="user-avatar-badge" id="dashUserAvatarInitials">SC</div>
+            <span class="user-title" id="dashNavbarUserName">Sarah Chen ⌵</span>
+          </div>
+        </header>
+
+        <!-- Hero Title -->
+        <section class="hero-section">
+          <h1 class="hero-title">Elevate Your Fitness Journey</h1>
+          <p class="hero-subtitle">An ultra-modern fitness platform tailored for your health journey</p>
+          <button type="button" class="btn-switch-auth" onclick="showAuthPage('signup')">Get Started</button>
+        </section>
+
+        <!-- 6 Bento Grid Cards -->
+        <div class="bento-grid">
+          
+          <!-- CARD 1: Smart Fuel Nutrition -->
+          <div class="card" style="cursor: pointer;" onclick="window.location.href='/nutrition'">
+            <div class="card-header">
+              <span class="card-title">1) Smart Fuel Nutrition</span>
+              <span class="card-dots">•••</span>
+            </div>
+
+            <div class="summary-row">
+              <span class="summary-label">Daily Summary</span>
+              <span class="calories-badge" id="card1CaloriesVal">2100 Kcal</span>
+            </div>
+
+            <div class="macros-row">
+              <div class="macro-col">
+                <h5>Protein</h5>
+                <div class="macro-bar"><div class="macro-bar-fill fill-protein"></div></div>
+                <span class="macro-val" id="card1ProteinVal">160g</span>
+              </div>
+              <div class="macro-col">
+                <h5>Carbs</h5>
+                <div class="macro-bar"><div class="macro-bar-fill fill-carbs"></div></div>
+                <span class="macro-val" id="card1CarbsVal">220g</span>
+              </div>
+              <div class="macro-col">
+                <h5>Fat</h5>
+                <div class="macro-bar"><div class="macro-bar-fill fill-fat"></div></div>
+                <span class="macro-val" id="card1FatVal">65g</span>
+              </div>
+            </div>
+
+            <div class="meal-section-title">Meal Schedule</div>
+            <div class="meals-grid">
+              <div class="meal-box"><div class="meal-name">Breakfast</div><div class="meal-time">8:00 AM</div></div>
+              <div class="meal-box"><div class="meal-name">Lunch</div><div class="meal-time">1:00 PM</div></div>
+              <div class="meal-box"><div class="meal-name">Dinner</div><div class="meal-time">7:00 PM</div></div>
+            </div>
+          </div>
+
+          <!-- CARD 2: ProCoach Elite -->
+          <div class="card" style="cursor: pointer;" onclick="window.location.href='/experts'">
+            <div class="card-header">
+              <span class="card-title">2) ProCoach Elite</span>
+              <span class="card-dots">•••</span>
+            </div>
+
+            <div class="procoach-subtitles">
+              <span>Certified Trainer</span>
+              <span>Booking Slots</span>
+            </div>
+
+            <div class="coaches-row">
+              <div class="coach-item">
+                <div class="coach-avatar-wrap">
+                  <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=150&auto=format&fit=crop" alt="Sarah J." class="coach-img" />
+                  <span class="check-icon">✓</span>
+                </div>
+                <span class="coach-name">Sarah J.</span>
+              </div>
+
+              <div class="coach-item">
+                <div class="coach-avatar-wrap">
+                  <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=150&auto=format&fit=crop" alt="Mark L." class="coach-img" />
+                  <span class="check-icon">✓</span>
+                </div>
+                <span class="coach-name">Mark L.</span>
+              </div>
+
+              <div class="slots-box">
+                <span class="slot-day">Tuesday</span>
+                <span class="slot-time">10 AM</span>
+              </div>
+            </div>
+
+            <div class="coach-buttons">
+              <button class="btn-book" onclick="event.stopPropagation(); alert('Session Booked!')">Book Session</button>
+              <button class="btn-msg" onclick="event.stopPropagation(); alert('Message Sent!')">Message Coach</button>
+            </div>
+          </div>
+
+          <!-- CARD 3: GymRadar GPS -->
+          <div class="card" style="cursor: pointer;" onclick="window.location.href='/fitness'">
+            <div class="card-header">
+              <span class="card-title">3) GymRadar GPS</span>
+              <span class="card-dots">•••</span>
+            </div>
+
+            <div class="map-preview">
+              <div class="map-grid"></div>
+              <div class="map-pin pin-crunch"><span class="map-pin-dot"></span><span>Crunch Fitness <small style="color:var(--text-muted)">(0.4mi)</small></span></div>
+              <div class="map-pin purple pin-anytime-l"><span class="map-pin-dot"></span><span>Anytime Fitness <small style="color:var(--text-muted)">(1.2mi)</small></span></div>
+              <div class="map-pin pin-anytime-r"><span class="map-pin-dot"></span><span>Anytime Fitness <small style="color:var(--text-muted)">(1.2mi)</small></span></div>
+              <div class="target-icon">🎯</div>
+            </div>
+          </div>
+
+          <!-- CARD 4: AuraFit AI Coach -->
+          <div class="card" style="cursor: pointer;" onclick="openAuraFitChat()">
+            <div class="card-header">
+              <span class="card-title">4) AuraFit AI Coach</span>
+              <span class="card-dots">•••</span>
+            </div>
+
+            <div class="ai-content-row">
+              <div class="skeleton-view">
+                <svg width="85" height="135" viewBox="0 0 100 180" fill="none" stroke="currentColor">
+                  <circle cx="50" cy="25" r="14" stroke="var(--neon-cyan)" stroke-width="2.5"/>
+                  <line x1="50" y1="39" x2="50" y2="95" stroke="var(--neon-green)" stroke-width="3"/>
+                  <line x1="22" y1="52" x2="78" y2="52" stroke="var(--neon-green)" stroke-width="3"/>
+                  <line x1="22" y1="52" x2="15" y2="85" stroke="var(--neon-cyan)" stroke-width="2.5"/>
+                  <line x1="15" y1="85" x2="26" y2="110" stroke="var(--neon-cyan)" stroke-width="2.5"/>
+                  <line x1="78" y1="52" x2="85" y2="85" stroke="var(--neon-cyan)" stroke-width="2.5"/>
+                  <line x1="85" y1="85" x2="74" y2="110" stroke="var(--neon-cyan)" stroke-width="2.5"/>
+                  <line x1="30" y1="95" x2="70" y2="95" stroke="var(--neon-green)" stroke-width="3"/>
+                  <line x1="30" y1="95" x2="26" y2="135" stroke="var(--neon-green)" stroke-width="3"/>
+                  <line x1="26" y1="135" x2="32" y2="175" stroke="var(--neon-green)" stroke-width="3"/>
+                  <line x1="70" y1="95" x2="74" y2="135" stroke="var(--neon-green)" stroke-width="3"/>
+                  <line x1="74" y1="135" x2="68" y2="175" stroke="var(--neon-green)" stroke-width="3"/>
+                  <circle cx="50" cy="52" r="3.5" fill="var(--neon-cyan)"/>
+                  <circle cx="22" cy="52" r="3.5" fill="var(--neon-green)"/>
+                  <circle cx="78" cy="52" r="3.5" fill="var(--neon-green)"/>
+                  <circle cx="30" cy="95" r="3.5" fill="var(--neon-green)"/>
+                  <circle cx="70" cy="95" r="3.5" fill="var(--neon-green)"/>
+                </svg>
+              </div>
+
+              <div class="ai-stats-list">
+                <div class="ai-stat-box">
+                  <h6>Instant rep counters</h6>
+                  <div class="ai-stat-val">Reps: 12/15 Squats</div>
+                  <div class="ai-stat-bar"><div class="ai-stat-bar-fill"></div></div>
+                </div>
+                <div class="ai-stat-box"><h6>Performance analysis</h6><div class="ai-stat-val" style="font-size:11px; color:var(--neon-green)">Metrics</div></div>
+                <div class="ai-stat-box"><h6>Repetition analysis</h6><div class="ai-stat-val" style="font-size:11px;">12/15</div></div>
+                <button type="button" class="btn-aurafit-action" onclick="event.stopPropagation(); openAuraFitChat()">⚡ Open AuraFit Coach</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD 5: ZenPulse Mind & Recovery -->
+          <div class="card" style="cursor: pointer;" onclick="window.location.href='/stressless'">
+            <div class="card-header">
+              <span class="card-title">5) ZenPulse Mind & Recovery</span>
+              <span class="card-dots">•••</span>
+            </div>
+
+            <div class="recovery-list">
+              <div class="rec-item">
+                <div class="rec-item-left"><span class="rec-icon-svg">📈</span><div class="rec-texts"><h6>HRV Score</h6><p>78ms (High)</p></div></div>
+                <div class="rec-bar"><div class="rec-bar-fill"></div></div>
+              </div>
+
+              <div class="rec-item" style="background:linear-gradient(90deg, #19222e, #14282e)">
+                <div class="rec-item-left"><span class="rec-icon-svg">💨</span><div class="rec-texts"><h6>Guided Breathing</h6><p>4-7-8 method</p></div></div>
+                <button class="breath-play-btn" onclick="event.stopPropagation(); alert('Starting 4-7-8 Guided Breathing!')">▶</button>
+              </div>
+
+              <div class="rec-item">
+                <div class="rec-item-left"><span class="rec-icon-svg" style="color:#a855f7;">🌙</span><div class="rec-texts"><h6>Sleep Recovery</h6><p>92% (8h 12m)</p></div></div>
+                <div class="rec-bar"><div class="rec-bar-fill" style="width:92%"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD 6: YouTube Workout Vault -->
+          <div class="card" style="cursor: pointer;" onclick="window.location.href='/youtube'">
+            <div class="card-header">
+              <div style="display: flex; align-items: center; gap: 7px;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="#ff0000"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                <span class="card-title">6) YouTube Workout Vault</span>
+              </div>
+              <span class="calories-badge" style="font-size: 9.5px;">50+ VIDEOS</span>
+            </div>
+
+            <div class="yt-vault-content">
+              <!-- Video Frame -->
+              <div class="yt-player-preview" id="ytPlayerContainer">
+                <iframe id="dashYtIframe" src="https://www.youtube-nocookie.com/embed/vcBig73ojpE" title="YouTube Workout Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              </div>
+
+              <!-- Quick Selection Pills -->
+              <div class="yt-quick-tabs">
+                <button type="button" class="yt-tab-chip active" onclick="event.stopPropagation(); switchYtVideo('vcBig73ojpE', 'Bench Press Form', this)">Bench Press</button>
+                <button type="button" class="yt-tab-chip" onclick="event.stopPropagation(); switchYtVideo('bEv6CCg2BC8', 'How to Squat', this)">Squat Guide</button>
+                <button type="button" class="yt-tab-chip" onclick="event.stopPropagation(); switchYtVideo('IODxDxX7oi4', 'Push-Up Tutorial', this)">Push-Ups</button>
+                <button type="button" class="yt-tab-chip" onclick="event.stopPropagation(); switchYtVideo('ml6cT4AZdqI', '15-Min HIIT Burn', this)">HIIT Burn</button>
+                <button type="button" class="yt-tab-chip" onclick="event.stopPropagation(); switchYtVideo('v7AYKMP6rOE', 'Beginner Yoga Flow', this)">Yoga</button>
+              </div>
+
+              <!-- Footer with Active Video Info and Library Link -->
+              <div class="yt-vault-footer">
+                <div class="yt-source-info">
+                  Playing: <span id="ytPlayingTitle">Bench Press Form</span>
+                </div>
+                <a href="exercises.html" target="_blank" class="btn-open-vault" title="Open 50+ video library">
+                  50+ Workouts ↗
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="footer-font-info">Inter / Poppins</div>
+      </main>
+    </div>
+  </section>
+
+  <!-- JS Controller -->
+  <script>
+    let currentAuthMode = 'signup';
+    let heightUnit = 'cm';
+    let weightUnit = 'kg';
+    let selectedGoal = 'Muscle Building';
+
+    function setMode(mode) {
+      currentAuthMode = mode;
+      const formPanel = document.querySelector('.auth-form-panel');
+      const tabSignIn = document.getElementById('tabSignInBtn');
+      const tabSignUp = document.getElementById('tabSignUpBtn');
+      const heading = document.getElementById('formHeading');
+      const subheading = document.getElementById('formSubheading');
+      const btnSubmit = document.getElementById('btnSubmitAuth');
+      const footerText = document.getElementById('footerText');
+      const footerLink = document.getElementById('footerLink');
+      const nameInput = document.getElementById('inputFullName');
+      const emailLabel = document.getElementById('emailLabel');
+
+      if (mode === 'signin') {
+        formPanel.classList.add('signin-active');
+        tabSignIn.classList.add('active');
+        tabSignUp.classList.remove('active');
+        heading.innerHTML = 'Welcome Back: <span>Sign In</span>';
+        subheading.innerText = 'Enter your credentials to access your workouts & stats.';
+        btnSubmit.innerText = 'LOG IN TO FITPULSE ➔';
+        footerText.innerText = "Don't have an account?";
+        footerLink.innerText = 'Create Account';
+        emailLabel.innerText = 'Email or Username';
+        if (nameInput) nameInput.removeAttribute('required');
+      } else {
+        formPanel.classList.remove('signin-active');
+        tabSignUp.classList.add('active');
+        tabSignIn.classList.remove('active');
+        heading.innerHTML = 'Get Started: <span>Join FitPulse</span>';
+        subheading.innerText = 'Enter your details to generate your tailored fitness profile.';
+        btnSubmit.innerText = 'START YOUR JOURNEY ➔';
+        footerText.innerText = 'Already have an account?';
+        footerLink.innerText = 'Sign In';
+        emailLabel.innerText = 'Email Address';
+        if (nameInput) nameInput.setAttribute('required', 'true');
+      }
+    }
+
+    function toggleMode() {
+      setMode(currentAuthMode === 'signup' ? 'signin' : 'signup');
+    }
+
+    function pickGoal(elem) {
+      document.querySelectorAll('.goal-chip').forEach(c => c.classList.remove('selected'));
+      elem.classList.add('selected');
+      selectedGoal = elem.innerText;
+    }
+
+    function toggleHeightUnit() {
+      heightUnit = heightUnit === 'cm' ? 'ft' : 'cm';
+      document.getElementById('uCm').classList.toggle('active-unit', heightUnit === 'cm');
+      document.getElementById('uFt').classList.toggle('active-unit', heightUnit === 'ft');
+      const el = document.getElementById('inputHeight');
+      el.value = heightUnit === 'cm' ? '168' : '5.6';
+    }
+
+    function toggleWeightUnit() {
+      weightUnit = weightUnit === 'kg' ? 'lbs' : 'kg';
+      document.getElementById('uKg').classList.toggle('active-unit', weightUnit === 'kg');
+      document.getElementById('uLbs').classList.toggle('active-unit', weightUnit === 'lbs');
+      const el = document.getElementById('inputWeight');
+      el.value = weightUnit === 'kg' ? '62.5' : '138';
+    }
+
+    function handleAuthSubmit(e) {
+      if (e) e.preventDefault();
+
+      let userName = 'Sarah Chen';
+      let email = 'sarah@fitpulse.com';
+      let weight = 62.5;
+
+      if (currentAuthMode === 'signin') {
+        const emailInput = document.getElementById('inputEmail').value.trim();
+        if (emailInput) {
+          email = emailInput;
+          const namePart = email.includes('@') ? email.split('@')[0] : email;
+          userName = namePart.charAt(0).toUpperCase() + namePart.slice(1);
+        }
+      } else {
+        const nameVal = document.getElementById('inputFullName').value.trim();
+        if (nameVal) userName = nameVal;
+        
+        const emVal = document.getElementById('inputEmail').value.trim();
+        if (emVal) email = emVal;
+
+        const wVal = parseFloat(document.getElementById('inputWeight').value);
+        if (wVal) weight = wVal;
+      }
+
+      // Propagate user's entered name to Home Dashboard
+      const initials = userName.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'SC';
+      document.getElementById('dashUserAvatarInitials').innerText = initials;
+      document.getElementById('dashNavbarUserName').innerText = `${userName} ⌵`;
+
+      // Switch view to Home Dashboard
+      document.getElementById('viewAuth').classList.remove('active-view');
+      document.getElementById('viewHome').classList.add('active-view');
+      window.scrollTo(0, 0);
+    }
+
+    function showDashboard() {
+      document.getElementById('viewAuth').classList.remove('active-view');
+      document.getElementById('viewHome').classList.add('active-view');
+    }
+
+    function showAuthPage(mode) {
+      setMode(mode || 'signin');
+      document.getElementById('viewHome').classList.remove('active-view');
+      document.getElementById('viewAuth').classList.add('active-view');
+      window.scrollTo(0, 0);
+    }
+
+    // Switch YouTube Video in Card 6
+    function switchYtVideo(videoId, title, btnElem) {
+      const iframe = document.getElementById('dashYtIframe');
+      const titleElem = document.getElementById('ytPlayingTitle');
+      if (iframe) {
+        iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1`;
+      }
+      if (titleElem) {
+        titleElem.innerText = title;
+      }
+      document.querySelectorAll('.yt-tab-chip').forEach(c => c.classList.remove('active'));
+      if (btnElem) btnElem.classList.add('active');
+    }
+  </script>
+
+  <!-- ================= AURAFIT AI CHAT MODAL ================= -->
+  <div id="aurafitChatModal" class="aurafit-chat-container">
+    <div class="aurafit-chat-card">
+      
+      <!-- Chat Header -->
+      <div class="aurafit-chat-header">
+        <div class="aurafit-header-info">
+          <div class="aurafit-avatar">⚡</div>
+          <div>
+            <div class="aurafit-title">AuraFit AI Coach</div>
+            <div class="aurafit-status"><span class="status-dot"></span> Online &bull; Fitness & Diet AI</div>
+          </div>
+        </div>
+        <div class="aurafit-header-actions">
+          <button type="button" class="aurafit-ctrl-btn" onclick="clearAuraFitChat()" title="Clear chat">🗑️</button>
+          <button type="button" class="aurafit-ctrl-btn" onclick="closeAuraFitChat()" title="Close chat">✕</button>
+        </div>
+      </div>
+
+      <!-- Quick Prompts Row -->
+      <div class="aurafit-quick-chips">
+        <button type="button" class="aurafit-chip" onclick="sendQuickPrompt('Suggest a high-intensity workout for fat burn')">🔥 Fat Burn Plan</button>
+        <button type="button" class="aurafit-chip" onclick="sendQuickPrompt('What is an ideal post-workout protein meal?')">🥗 Post-Workout Meal</button>
+        <button type="button" class="aurafit-chip" onclick="sendQuickPrompt('How do I fix my squat and deadlift form?')">🏋️ Fix Squat Form</button>
+        <button type="button" class="aurafit-chip" onclick="sendQuickPrompt('How much water and sleep do I need for recovery?')">💧 Recovery & Sleep</button>
+      </div>
+
+      <!-- Chat Messages Stream -->
+      <div class="aurafit-messages" id="aurafitMessages">
+        <div class="aurafit-msg msg-ai">
+          <div class="msg-avatar">⚡</div>
+          <div class="msg-bubble">
+            <strong>Hey there! I'm AuraFit, your 24/7 AI Coach. 🏋️‍♂️</strong>
+            <p>I can help you build customized workout routines, optimize your nutrition & macros, refine exercise form, and stay motivated. What can we crush today?</p>
+            <span class="msg-time">Just now</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Typing Indicator -->
+      <div class="aurafit-typing" id="aurafitTyping" style="display: none;">
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        <span style="font-size: 11px; color: #64748B; margin-left: 6px;">AuraFit is thinking...</span>
+      </div>
+
+      <!-- Chat Input Area -->
+      <form class="aurafit-input-bar" onsubmit="handleAuraFitSend(event)">
+        <input 
+          type="text" 
+          id="aurafitInput" 
+          placeholder="Ask AuraFit about workouts, diet, form..." 
+          autocomplete="off"
+          required
+        />
+        <button type="submit" id="aurafitSendBtn" class="aurafit-send-btn" title="Send message">
+          <span>Send</span>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+        </button>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- Floating Action Button (FAB) -->
+  <button type="button" class="aurafit-floating-fab" id="btnAuraFitFloatingFab" onclick="openAuraFitChat()" title="Open AuraFit AI Coach">
+    <span class="fab-icon">⚡</span>
+    <span class="fab-text">AuraFit AI Coach</span>
+  </button>
+  <script src="/static/js/aurafit_chat.js"></script>
+
+</body>
+</html>

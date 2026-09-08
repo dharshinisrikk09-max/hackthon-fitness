@@ -1,0 +1,11 @@
+{% extends "stressless/base.html" %}
+{% block title %}What do you feel like doing? · StressLess{% endblock %}
+{% block content %}
+<div class="checkin-wrap">
+  <div class="question-card" style="text-align:center;">
+    <h2>Let's start with a check-in first 🙂</h2>
+    <p class="question-sub">We personalize your recommendation using your current stress level, so let's check in first.</p>
+    <a href="{{ url_for('stressless.checkin_page') }}" class="btn btn-primary">Start Check-in →</a>
+  </div>
+</div>
+{% endblock %}

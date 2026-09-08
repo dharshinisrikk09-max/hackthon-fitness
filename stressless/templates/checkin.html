@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block title %}Check-in · StressLess{% endblock %}
+{% block content %}
+
+<div class="checkin-wrap">
+
+  <div class="progress-bar-outer"><div class="progress-bar-inner" id="progressBar"></div></div>
+
+  <!-- ===================== QUESTIONNAIRE STEPS ===================== -->
+  <div id="questionStage"></div>
+
+  <!-- ===================== SCORE RESULT ===================== -->
+  <div id="scoreStage" class="question-card" style="display:none; text-align:center;">
+    <h2>Here's your wellness snapshot ✨</h2>
+    <div class="score-ring-wrap">
+      <div class="score-ring" id="scoreRing">
+        <svg width="190" height="190" viewBox="0 0 190 190">
+          <circle class="score-ring-bg" cx="95" cy="95" r="80"></circle>
+          <circle class="score-ring-fg" id="scoreRingFg" cx="95" cy="95" r="80"></circle>
+        </svg>
+        <div class="score-ring-text">
+          <span class="num" id="scoreNum">0</span>
+          <span class="cat" id="scoreCat">–</span>
+        </div>
+      </div>
+    </div>
+    <p class="disclaimer-box">
+      💡 This score is only a <strong>wellness self-awareness indicator</strong> —
+      it's not a medical diagnosis. Be gentle with yourself either way.
+    </p>
+    <div id="supportNotice" style="display:none;" class="disclaimer-box" style="background:#FFF0F0;">
+      It sounds like today has been really tough. You deserve support beyond an app —
+      <a href="{{ url_for('support_page') }}" style="text-decoration:underline; font-weight:700;">see some options here</a>.
+    </div>
+    <button class="btn btn-primary" id="toInterestsBtn">What should I do now? 🎯</button>
+  </div>
+
+  <!-- ===================== INTERESTS ===================== -->
+  <div id="interestStage" class="question-card" style="display:none;">
+    <h2>What would you like to do right now?</h2>
+    <p class="question-sub">Pick one or more — we'll personalize your reset around it.</p>
+    <div class="interest-grid" id="interestGrid">
+      <div class="interest-chip" data-key="breathing"><span class="emoji">🫁</span>Breathing</div>
+      <div class="interest-chip" data-key="music"><span class="emoji">🎵</span>Music</div>
+      <div class="interest-chip" data-key="games"><span class="emoji">🎮</span>Games</div>
+      <div class="interest-chip" data-key="meditation"><span class="emoji">🧘</span>Meditation</div>
+      <div class="interest-chip" data-key="puzzle"><span class="emoji">🧩</span>Puzzle</div>
+      <div class="interest-chip" data-key="movement"><span class="emoji">🚶</span>Movement</div>
+      <div class="interest-chip" data-key="journaling"><span class="emoji">✍️</span>Journaling</div>
+      <div class="interest-chip" data-key="positive"><span class="emoji">🌈</span>Positive Vibes</div>
+    </div>
+    <div class="checkin-nav">
+      <button class="btn btn-ghost" id="backToScoreBtn">← Back</button>
+      <button class="btn btn-primary" id="getRecBtn">Get My Recommendation 💫</button>
+    </div>
+  </div>
+
+  <!-- ===================== RECOMMENDATION ===================== -->
+  <div id="recStage" style="display:none;">
+    <div class="rec-card">
+      <span class="big-emoji" id="recEmoji">🌈</span>
+      <h2 id="recTitle">Your Personalized Reset</h2>
+      <p id="recMessage"></p>
+      <p class="rec-followup" id="recFollowup" style="display:none;"></p>
+      <p class="rec-prompt" id="recPrompt">Would you like to try this activity?</p>
+      <div class="rec-choice-btns">
+        <a href="#" class="btn btn-primary" id="startActivityBtn">Yes, let's go! →</a>
+        <button class="btn btn-ghost" id="skipActivityBtn">No thanks, pick something else 🔄</button>
+      </div>
+      <div style="text-align:center; margin-top:10px;">
+        <a href="{{ url_for('dashboard_page') }}" class="btn btn-ghost" id="skipToDashBtn" style="font-size:0.85rem; opacity:0.75;">Skip to Dashboard →</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/checkin.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,238 @@
+{% extends "base.html" %}
+{% block title %}Support · StressLess{% endblock %}
+{% block head %}
+{% endblock %}
+{% block content %}
+
+<!-- ===================== HERO ===================== -->
+<section class="support-hero">
+  <span class="hero-emoji-float" style="top:12%; left:6%;">💚</span>
+  <span class="hero-emoji-float" style="top:18%; right:12%; animation-delay:1s;">🌿</span>
+  <span class="hero-emoji-float" style="bottom:18%; left:12%; animation-delay:2s;">✨</span>
+  <span class="hero-emoji-float" style="bottom:14%; right:8%; animation-delay:1.5s;">🍃</span>
+
+  <div class="support-hero-content">
+    <div class="support-hero-text">
+      <h1 class="hero-title">You're Not Alone 💚</h1>
+      <p class="hero-tagline">Support is always a good place to start.</p>
+      <p class="hero-desc">
+        StressLess is here to help you find simple, positive ways to take a pause,
+        reflect, and take care of yourself.
+      </p>
+      <div class="support-hero-btns">
+        <a href="#support-options" class="btn btn-primary">Explore Support 🌱</a>
+        <a href="{{ url_for('dashboard_page') }}" class="btn btn-secondary">Back to Dashboard</a>
+      </div>
+    </div>
+    <div class="support-hero-visual">
+      <div class="support-illustration">
+        <div class="si-circle si-circle-1"></div>
+        <div class="si-circle si-circle-2"></div>
+        <div class="si-circle si-circle-3"></div>
+        <span class="si-emoji si-emoji-1">🧘</span>
+        <span class="si-emoji si-emoji-2">🌱</span>
+        <span class="si-emoji si-emoji-3">💛</span>
+        <span class="si-emoji si-emoji-4">🫧</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SUPPORT OPTIONS ===================== -->
+<section class="section" id="support-options">
+  <h2 class="section-title">How can we support you?</h2>
+  <p class="section-sub">Choose what feels right for you right now.</p>
+
+  <div class="support-cards">
+    <!-- Card 1 -->
+    <div class="support-card">
+      <div class="support-card-icon"><span>🧘</span></div>
+      <h3>Calm &amp; Reset</h3>
+      <p>Take a short pause with breathing, meditation, or a calming activity.</p>
+      <a href="{{ url_for('activity_page', activity_type='breathing') }}" class="btn btn-primary btn-sm">Explore Activities</a>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="support-card">
+      <div class="support-card-icon"><span>💭</span></div>
+      <h3>Talk to Someone You Trust</h3>
+      <p>Sometimes sharing how you feel with someone you trust can make things feel easier.</p>
+      <div class="trust-list">
+        <span class="trust-chip">👨‍👩‍👧 Parent / Guardian</span>
+        <span class="trust-chip">👩‍🏫 Teacher</span>
+        <span class="trust-chip">🗣️ Counselor</span>
+        <span class="trust-chip">🤝 Trusted Friend</span>
+      </div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="support-card">
+      <div class="support-card-icon"><span>📔</span></div>
+      <h3>Journal Your Thoughts</h3>
+      <p>Write down what's on your mind and give yourself a moment to reflect.</p>
+      <a href="{{ url_for('journal_page') }}" class="btn btn-primary btn-sm">Open Journal</a>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="support-card">
+      <div class="support-card-icon"><span>🎯</span></div>
+      <h3>Find Your Next Step</h3>
+      <p>Check in with yourself and discover an activity that matches what YOU want to do.</p>
+      <a href="{{ url_for('checkin_page') }}" class="btn btn-primary btn-sm">Take a Check-in</a>
+    </div>
+
+    <!-- Card 5 -->
+    <div class="support-card">
+      <div class="support-card-icon"><span>🌱</span></div>
+      <h3>Small Positive Steps</h3>
+      <p>Try a simple positive activity, movement break, music session, puzzle, or game.</p>
+      <a href="{{ url_for('activity_page', activity_type='positive') }}" class="btn btn-primary btn-sm">Explore Activities</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== QUICK ACTIONS ===================== -->
+<section class="section support-quick-section">
+  <h2 class="section-title">Quick ways to feel supported</h2>
+  <p class="section-sub">Jump straight into an activity — no check-in needed.</p>
+
+  <div class="quick-actions">
+    <a href="{{ url_for('activity_page', activity_type='breathing') }}" class="quick-action-card" id="qa-breathing">
+      <span class="qa-emoji">🌬️</span>
+      <span class="qa-label">Breathing</span>
+    </a>
+    <a href="{{ url_for('activity_page', activity_type='music') }}" class="quick-action-card" id="qa-music">
+      <span class="qa-emoji">🎵</span>
+      <span class="qa-label">Music</span>
+    </a>
+    <a href="{{ url_for('activity_page', activity_type='puzzle') }}" class="quick-action-card" id="qa-puzzle">
+      <span class="qa-emoji">🧩</span>
+      <span class="qa-label">Puzzle</span>
+    </a>
+    <a href="{{ url_for('activity_page', activity_type='games') }}" class="quick-action-card" id="qa-games">
+      <span class="qa-emoji">🎮</span>
+      <span class="qa-label">Games</span>
+    </a>
+    <a href="{{ url_for('journal_page') }}" class="quick-action-card" id="qa-journaling">
+      <span class="qa-emoji">✍️</span>
+      <span class="qa-label">Journaling</span>
+    </a>
+    <a href="{{ url_for('activity_page', activity_type='movement') }}" class="quick-action-card" id="qa-movement">
+      <span class="qa-emoji">🚶</span>
+      <span class="qa-label">Movement</span>
+    </a>
+  </div>
+</section>
+
+<!-- ===================== EXTRA SUPPORT MESSAGE ===================== -->
+<section class="section">
+  <div class="support-message-card">
+    <div class="support-message-icon">💚</div>
+    <h2>Need a little extra support?</h2>
+    <p>
+      If you're feeling very overwhelmed or finding things difficult to manage,
+      consider talking to a trusted adult, parent or guardian, teacher, counselor,
+      or another professional you trust.
+      You don't have to figure everything out alone.
+    </p>
+    <div class="support-message-steps">
+      <div class="sms-item"><span class="sms-num">1</span><span>A parent, guardian, or relative you feel safe with.</span></div>
+      <div class="sms-item"><span class="sms-num">2</span><span>A teacher, school counselor, or campus wellness center.</span></div>
+      <div class="sms-item"><span class="sms-num">3</span><span>A doctor, therapist, or other licensed mental health professional.</span></div>
+    </div>
+    <p class="support-message-footnote">
+      Reaching out is a sign of strength, not weakness. You deserve support from real people who can help. 🌿
+    </p>
+  </div>
+</section>
+
+<!-- ===================== FEEDBACK ===================== -->
+<section class="section support-feedback-section">
+  <h2 class="section-title">How is StressLess working for you?</h2>
+  <p class="section-sub">Your feedback helps us improve — tap one to let us know.</p>
+
+  <div class="feedback-row" id="feedbackRow">
+    <button class="feedback-btn" data-feedback="helpful" id="fb-helpful">
+      <span class="fb-emoji">👍</span>
+      <span class="fb-label">Helpful</span>
+    </button>
+    <button class="feedback-btn" data-feedback="okay" id="fb-okay">
+      <span class="fb-emoji">😐</span>
+      <span class="fb-label">It's okay</span>
+    </button>
+    <button class="feedback-btn" data-feedback="suggestion" id="fb-suggestion">
+      <span class="fb-emoji">💡</span>
+      <span class="fb-label">I have a suggestion</span>
+    </button>
+  </div>
+  <div id="feedbackThanks" class="feedback-thanks" style="display:none;">
+    <span>✨</span> Thank you for your feedback! We appreciate it. 💚
+  </div>
+  <div id="feedbackSuggestion" class="feedback-suggestion-box" style="display:none;">
+    <textarea id="suggestionText" placeholder="Tell us what could make StressLess better for you..." rows="3"></textarea>
+    <button class="btn btn-primary btn-sm" id="submitSuggestion">Send Suggestion 💌</button>
+  </div>
+</section>
+
+<!-- ===================== CTA ===================== -->
+<section class="section" style="text-align:center; padding-bottom:80px;">
+  <p style="color:var(--ink-soft); font-size:1.05rem; margin-bottom:18px;">
+    Remember — StressLess is a self-awareness tool, not a medical device.
+    Be kind to yourself. 🌿
+  </p>
+  <a href="{{ url_for('checkin_page') }}" class="btn btn-primary">Start a Check-in ✨</a>
+</section>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+(() => {
+  // Feedback interaction
+  const feedbackRow = document.getElementById('feedbackRow');
+  const thanks = document.getElementById('feedbackThanks');
+  const suggestionBox = document.getElementById('feedbackSuggestion');
+
+  document.querySelectorAll('.feedback-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const type = btn.dataset.feedback;
+
+      // Visual selection
+      document.querySelectorAll('.feedback-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+
+      if (type === 'suggestion') {
+        suggestionBox.style.display = 'block';
+        thanks.style.display = 'none';
+      } else {
+        suggestionBox.style.display = 'none';
+        thanks.style.display = 'block';
+        // Briefly show toast
+        if (window.StressLess && StressLess.toast) {
+          StressLess.toast(`Thanks for your feedback! ${type === 'helpful' ? '💚' : '🙂'}`);
+        }
+      }
+    });
+  });
+
+  document.getElementById('submitSuggestion').addEventListener('click', () => {
+    const text = document.getElementById('suggestionText').value.trim();
+    if (!text) {
+      if (window.StressLess && StressLess.toast) StressLess.toast('Please type something first 🙂');
+      return;
+    }
+    suggestionBox.style.display = 'none';
+    thanks.style.display = 'block';
+    if (window.StressLess && StressLess.toast) {
+      StressLess.toast('Suggestion sent — thank you! 💌');
+    }
+  });
+
+  // Smooth scroll for "Explore Support" button
+  document.querySelector('a[href="#support-options"]')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    document.getElementById('support-options').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+})();
+</script>
+{% endblock %}

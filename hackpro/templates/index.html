@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FitPro - Elite Personal Tutors & Training Ecosystem</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Top Navigation -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="/" class="brand">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M20.57 14.86L22 13.43L20.57 12L17 15.57L8.43 7L12 3.43L10.57 2L9.14 3.43L7.71 2L5.57 4.14L4.14 2.71L2.71 4.14L4.14 5.57L2 7.71L3.43 9.14L2 10.57L3.43 12L7 8.43L15.57 17L12 20.57L13.43 22L14.86 20.57L16.29 22L18.43 19.86L19.86 21.29L21.29 19.86L19.86 18.43L22 16.29L20.57 14.86Z"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1>FITPRO<span>PERSONAL TUTOR</span></h1>
+        </div>
+      </a>
+
+      <!-- User Constraints Quota Bar -->
+      <div class="quota-bar">
+        <div class="quota-chip" title="Maximum 3 consultations allowed across all experts">
+          <div class="quota-dot"></div>
+          <span>Consultations Left:</span>
+          <span id="consultRemainingBadge" class="quota-count">{{ consultations_remaining }} / {{ max_consultations }}</span>
+        </div>
+        <div class="quota-chip danger-chip" title="Maximum 2 discontinuations permitted">
+          <div class="quota-dot"></div>
+          <span>Discontinues Left:</span>
+          <span id="discontRemainingBadge" class="quota-count">{{ discontinues_remaining }} / {{ max_discontinuations }}</span>
+        </div>
+        <button id="resetDemoBtn" class="btn btn-outline btn-sm" title="Reset all quotas for testing">Reset Quota</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Hero Banner -->
+    <section class="hero">
+      <div class="hero-pill">⚡ Elite 1-on-1 Personal Guidance</div>
+      <h2 class="hero-title">Select Your <span class="highlight">Gym Master</span> & Personal Tutor</h2>
+      <p class="hero-desc">
+        Connect with world-class celebrity trainers and athletic directors. Touch any trainer card to inspect their experience, achievements, and client feedback. Choose between a consultation or confirm your dedicated personal tutor.
+      </p>
+    </section>
+
+    <!-- Active Confirmed Trainer Banner (if user has enrolled) -->
+    {% if confirmed_trainer %}
+    <div class="active-banner">
+      <div class="active-banner-info">
+        <img src="{{ confirmed_trainer.icon }}" alt="{{ confirmed_trainer.name }}" class="active-banner-avatar">
+        <div class="active-banner-text">
+          <h4>Enrolled with {{ confirmed_trainer.name }}</h4>
+          <p>★ Active Personal Tutor &bull; {{ confirmed_trainer.specialized_field }}</p>
+        </div>
+      </div>
+      <a href="/experts/coach/{{ confirmed_trainer.id }}" class="btn btn-primary">Open Coach Dashboard ↗</a>
+    </div>
+    {% endif %}
+
+    <!-- Roster Section -->
+    <div class="section-header">
+      <div>
+        <h3>10 Elite Gym Experts</h3>
+        <p>Touch any icon to explore their profile and book a session</p>
+      </div>
+      <div>
+        <span style="font-size: 0.85rem; color: var(--neon-green); font-weight: 600;">
+          💡 Rule: Max 3 Consultations &bull; Max 2 Discontinuations
+        </span>
+      </div>
+    </div>
+
+    <!-- 10 Gym Expert Cards Grid -->
+    <div class="trainers-grid">
+      {% for t in trainers %}
+      <div class="trainer-card {% if confirmed_trainer and confirmed_trainer.id == t.id %}is-active-coach{% endif %}"
+           data-id="{{ t.id }}"
+           data-name="{{ t.name }}"
+           data-experience="{{ t.experience }}"
+           data-field="{{ t.specialized_field }}"
+           data-achievements="{{ t.major_achievements }}"
+           data-feedback="{{ t.client_feedback }}"
+           data-icon="{{ t.icon }}"
+           data-tag="{{ t.tag }}"
+           data-rating="{{ t.rating }}"
+           tabindex="0"
+           role="button"
+           aria-label="View profile for {{ t.name }}">
+        
+        <div>
+          <div class="trainer-card-header">
+            <div class="trainer-icon-wrap">
+              <img src="{{ t.icon }}" alt="{{ t.name }}" class="trainer-icon">
+            </div>
+            <div class="trainer-meta">
+              <h4>{{ t.name }}</h4>
+              <span class="trainer-tag">{{ t.tag }}</span>
+            </div>
+          </div>
+
+          <ul class="trainer-info-list">
+            <li class="trainer-info-item">
+              <span class="info-label">Experience</span>
+              <span class="info-value">{{ t.experience }}</span>
+            </li>
+            <li class="trainer-info-item">
+              <span class="info-label">Specialty</span>
+              <span class="info-value">{{ t.specialized_field }}</span>
+            </li>
+            <li class="trainer-info-item">
+              <span class="info-label">Client Rating</span>
+              <span class="info-value" style="color: #fbbf24;">★ {{ t.rating }}</span>
+            </li>
+          </ul>
+
+          <div class="trainer-snippet">
+            "{{ t.client_feedback }}"
+          </div>
+        </div>
+
+        <div class="card-cta-row">
+          {% if confirmed_trainer and confirmed_trainer.id == t.id %}
+          <button class="btn btn-primary btn-block" style="box-shadow: 0 0 15px var(--neon-green);">
+            ✓ Your Active Coach
+          </button>
+          {% else %}
+          <button class="btn btn-secondary btn-block">
+            View & Choose ↗
+          </button>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </main>
+
+  <!-- Modal 1: Trainer Profile Details & Consultation / Confirmation Decision -->
+  <div id="trainerModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modalName">
+    <div class="modal-box">
+      <button id="closeTrainerModal" class="modal-close-btn" aria-label="Close modal">&times;</button>
+      
+      <div class="modal-header">
+        <img id="modalAvatar" src="" alt="Trainer" class="modal-avatar">
+        <div class="modal-header-info">
+          <h3 id="modalName">Trainer Name</h3>
+          <div id="modalSpecialty" class="specialty">Specialized Field</div>
+          <div class="modal-badges">
+            <span id="modalTag" class="badge-tag">TAG</span>
+            <span id="modalRating" class="badge-tag" style="color: #fbbf24;">★ 4.9</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-body">
+        <div class="detail-section">
+          <h5>Total Experience</h5>
+          <p id="modalExperience">20+ Years</p>
+        </div>
+
+        <div class="detail-section">
+          <h5>Major Achievements</h5>
+          <p id="modalAchievements">Key career milestones and honors.</p>
+        </div>
+
+        <div class="detail-section">
+          <h5>General Client Feedback</h5>
+          <p id="modalFeedback">"Feedback quote from trainees."</p>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button id="btnConsult" class="btn btn-secondary" title="Book a 1-on-1 consultation (Max 3 allowed)">
+          <span>💬</span> Book Consultation
+        </button>
+        <button id="btnConfirm" class="btn btn-primary" title="Confirm trainer and open dedicated coaching room">
+          <span>⚡</span> Confirm & Start Coaching
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 2: Remembrance Warning / Notice Alert -->
+  <div id="remembranceModal" class="modal-overlay" role="dialog" aria-modal="true">
+    <div class="modal-box remembrance-box">
+      <div id="remembranceIcon" class="remembrance-icon">⚠️</div>
+      <h3 id="remembranceTitle" class="remembrance-title">Limit Notice</h3>
+      <p id="remembranceMsg" class="remembrance-msg">Detailed policy message goes here.</p>
+      <button id="closeRemembrance" class="btn btn-primary btn-block">Understood</button>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <p>FitPro Gym & Athlete Network &bull; <strong>Personal Tutor Module</strong> &bull; Black & Neon Green Performance Edition</p>
+    </div>
+  </footer>
+
+  <script src="/static/js/main.js"></script>
+</body>
+</html>

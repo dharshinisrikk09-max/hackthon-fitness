@@ -1,0 +1,68 @@
+{% extends "stressless/base.html" %}
+{% block title %}Dashboard · StressLess{% endblock %}
+{% block content %}
+
+<div class="section" style="padding-bottom:0;">
+  <h1 style="text-align:center;">📊 Your Wellness Dashboard</h1>
+  <p class="section-sub">A snapshot of how you've been doing</p>
+</div>
+
+<div class="dash-grid">
+
+  <div class="dash-card">
+    <h3>Current Stress Score</h3>
+    <div class="big" id="dCurrentScore">–</div>
+    <div id="dCurrentCategory" style="color:var(--ink-soft); text-transform:capitalize;"></div>
+  </div>
+
+  <div class="dash-card">
+    <h3>Today's Mood</h3>
+    <div class="big" id="dMood">–</div>
+  </div>
+
+  <div class="dash-card">
+    <h3>Recommended For You</h3>
+    <div id="dRecommendation" style="font-size:0.95rem;">Complete a check-in to see a suggestion.</div>
+  </div>
+
+  <div class="dash-card">
+    <h3>Total Points</h3>
+    <div class="big" id="dPoints">0</div>
+  </div>
+
+  <div class="dash-card">
+    <h3>Current Streak</h3>
+    <div class="big" id="dStreak">0 🔥</div>
+    <div style="color:var(--ink-soft); font-size:0.85rem;">Longest: <span id="dLongestStreak">0</span> days</div>
+  </div>
+
+  <div class="dash-card">
+    <h3>Activities Completed</h3>
+    <div class="big" id="dActivitiesCount">0</div>
+  </div>
+
+  <div class="dash-card">
+    <h3>Favorite Activity</h3>
+    <div class="big" id="dFavorite" style="font-size:1.3rem;">–</div>
+  </div>
+
+  <div class="dash-card" style="grid-column: span 2;">
+    <h3>Weekly Stress Trend</h3>
+    <div class="trend-bars" id="dTrend"></div>
+  </div>
+
+  <div class="dash-card" style="grid-column: 1 / -1;">
+    <h3>Achievements</h3>
+    <div class="badge-grid" id="dBadges"></div>
+  </div>
+
+</div>
+
+<div style="text-align:center; padding-bottom:60px;">
+  <a href="{{ url_for('stressless.checkin_page') }}" class="btn btn-primary">New Check-in ✨</a>
+</div>
+
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='stressless/js/dashboard.js') }}"></script>
+{% endblock %}

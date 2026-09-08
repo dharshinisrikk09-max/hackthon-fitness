@@ -1,0 +1,29 @@
+{% extends "stressless/base.html" %}
+{% block title %}Journal · StressLess{% endblock %}
+{% block content %}
+
+<div class="journal-wrap">
+  <h1>✍️ Journal</h1>
+  <p class="question-sub">A private-feeling space just for your thoughts. Pick a prompt or write freely.</p>
+
+  <div class="prompt-chip-row" id="promptRow">
+    <div class="prompt-chip" data-prompt="What is bothering you right now?">What's bothering you?</div>
+    <div class="prompt-chip" data-prompt="What is one thing you can control?">One thing you can control</div>
+    <div class="prompt-chip" data-prompt="What made you smile today?">What made you smile?</div>
+    <div class="prompt-chip" data-prompt="What are you grateful for?">What are you grateful for?</div>
+    <div class="prompt-chip" data-prompt="Free write">Free write</div>
+  </div>
+
+  <textarea class="journal-input" id="journalInput" placeholder="Start typing here..."></textarea>
+  <div style="text-align:right; margin-top:12px;">
+    <button class="btn btn-primary" id="saveEntryBtn">Save Entry 💾</button>
+  </div>
+
+  <h2 style="margin-top:44px;">Past Entries</h2>
+  <div id="entryList"><p class="question-sub">Loading...</p></div>
+</div>
+
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='stressless/js/journal.js') }}"></script>
+{% endblock %}

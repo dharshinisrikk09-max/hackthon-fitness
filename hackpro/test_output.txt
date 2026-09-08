@@ -1,0 +1,11 @@
+﻿python : ......
+At line:1 char:1
++ python -m unittest test_app.py 2>&1 | Out-File -FilePath test_output. ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (......:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+----------------------------------------------------------------------
+Ran 6 tests in 0.064s
+
+OK

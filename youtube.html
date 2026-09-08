@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fitness & Exercise Video Hub (50+ Workouts)</title>
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+                :root {
+      /* Palette: Vibrant Fitness Orange & Crisp Clean White */
+      --bg-outside: #f4f5f7;
+      --app-bg: #f8f9fa;
+      --sidebar-bg: #ffffff;
+      --bg-primary: #f8f9fa;
+      --bg: #f8f9fa;
+      
+      /* Surfaces / Cards */
+      --card-bg: #ffffff;
+      --card-inner: #f8fafc;
+      --input-bg: #ffffff;
+      --bg-surface: #ffffff;
+      --bg-surface-elevated: #f8fafc;
+      --bg-card: #ffffff;
+      --bg-card-hover: #fff7ed;
+      --card-hover: #fff7ed;
+      
+      /* Primary Accents (Orange Theme) */
+      --neon-cyan: #ea6c36;
+      --forest-green-start: #ea6c36;
+      --forest-green-end: #c2410c;
+      --neon-cyan-glow: rgba(234, 108, 54, 0.35);
+      --primary: #ea6c36;
+      --secondary: #ff8555;
+      --primary-dim: rgba(234, 108, 54, 0.15);
+      --primary-glow: rgba(234, 108, 54, 0.4);
+      --secondary-dim: rgba(234, 108, 54, 0.1);
+      --grad-hero: linear-gradient(135deg, #ea6c36 0%, #ff8555 100%);
+      --border-active: #ea6c36;
+      --accent-cyan: #ea6c36;
+      
+      /* Tertiary Accents / Buttons (Orange Theme) */
+      --neon-green: #ea6c36;
+      --accent-green: #ea6c36;
+      --neon-green-hover: #ff8555;
+      --accent-green-hover: #ff8555;
+      --neon-green-glow: rgba(234, 108, 54, 0.4);
+      --accent-green-light: rgba(234, 108, 54, 0.12);
+      --crowd-low: #ea6c36;
+      --crowd-mid: #f59e0b;
+      --crowd-high: #ef4444;
+      --accent: #ea6c36;
+      --accent-dim: rgba(234, 108, 54, 0.15);
+      --grad-warm: linear-gradient(135deg, #ea6c36 0%, #ff8555 100%);
+      --neon-emerald: #ff8555;
+      --neon-glow: rgba(234, 108, 54, 0.4);
+      --accent-danger: #ef4444;
+      --accent-danger-glow: rgba(239, 68, 68, 0.4);
+
+      /* Text Colors (Dark for Light Theme) */
+      --text-main: #1f2937;
+      --text-primary: #1f2937;
+      --text-muted: #64748b;
+      --text-secondary: #475569;
+      --text-dim: #94a3b8;
+      --ink: #1f2937;
+      --ink-soft: #475569;
+      --dim: #94a3b8;
+      
+      /* Borders */
+      --input-border: #e2e8f0;
+      --border-color: #e2e8f0;
+      --border-dim: #f1f5f9;
+      --border-subtle: #f1f5f9;
+      --border: #e2e8f0;
+      --border-hover: #ea6c36;
+
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --radius-full: 9999px;
+
+      --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 8px 24px rgba(234, 108, 54, 0.08);
+      --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.05);
+      --shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.04);
+
+      --font-main: 'Plus Jakarta Sans', 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--app-bg);
+      color: var(--text-main);
+      min-height: 100vh;
+      padding-bottom: 60px;
+    }
+
+    header {
+      background: rgba(255, 255, 255, 0.95); box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      padding: 18px 28px;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #ea6c36 0%, #ff8555 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      box-shadow: 0 0 16px var(--primary-glow);
+    }
+
+    .brand-text h1 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .badge {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      background: rgba(234, 108, 54, 0.15);
+      color: var(--primary);
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(234, 108, 54, 0.3);
+    }
+
+    .brand-text p {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .main-container {
+      max-width: 1350px;
+      margin: 0 auto;
+      padding: 30px 20px 0;
+    }
+
+    .hero-section {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .hero-section h2 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+      background: linear-gradient(135deg, #1f2937 40%, #ea6c36 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-section p {
+      font-size: 0.98rem;
+      color: var(--text-muted);
+      max-width: 620px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+
+    /* Filters & Search Control Bar */
+    .controls-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+      margin-bottom: 28px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .search-box {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .search-box i {
+      position: absolute;
+      left: 14px;
+      color: var(--text-sub);
+    }
+
+    .search-box input {
+      width: 100%;
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 14px 12px 42px;
+      color: var(--text-main);
+      font-size: 0.92rem;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .search-box input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-glow);
+    }
+
+    .categories-list {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+
+    .category-btn {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 7px 16px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .category-btn:hover {
+      background: #fff7ed;
+      color: var(--text-main);
+    }
+
+    .category-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      font-weight: 700;
+      box-shadow: 0 0 14px var(--primary-glow);
+    }
+
+    .count-indicator {
+      margin-bottom: 18px;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    .count-indicator strong {
+      color: var(--primary);
+    }
+
+    /* Video Cards Grid */
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 22px;
+    }
+
+    .video-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .video-card:hover {
+      transform: translateY(-5px);
+      background: var(--bg-card-hover);
+      border-color: var(--border-hover);
+      box-shadow: 0 12px 30px -10px rgba(234, 108, 54, 0.2);
+    }
+
+    .thumb-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #000;
+      overflow: hidden;
+    }
+
+    .thumb-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.35s ease;
+    }
+
+    .video-card:hover .thumb-wrap img {
+      transform: scale(1.06);
+    }
+
+    .play-btn-circle {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s ease;
+    }
+
+    .play-icon-box {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(234, 108, 54, 0.9);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 20px rgba(234, 108, 54, 0.6);
+      transition: transform 0.2s ease;
+    }
+
+    .video-card:hover .play-icon-box {
+      transform: scale(1.15);
+      background: var(--primary);
+    }
+
+    .duration-tag {
+      position: absolute;
+      bottom: 8px;
+      right: 8px;
+      background: rgba(0, 0, 0, 0.8);
+      color: var(--text-main, #1a1a1a);
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: 5px;
+    }
+
+    .card-info {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .card-badge {
+      display: inline-block;
+      align-self: flex-start;
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 6px;
+      background: rgba(234, 108, 54, 0.12);
+      color: var(--primary);
+      border: 1px solid rgba(234, 108, 54, 0.25);
+      margin-bottom: 8px;
+    }
+
+    .card-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      line-height: 1.35;
+      margin-bottom: 10px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .card-meta {
+      margin-top: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding-top: 8px;
+    }
+
+    .card-target {
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    /* Video Lightbox Modal */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(4, 7, 14, 0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+
+    .modal-backdrop.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-box {
+      width: 100%;
+      max-width: 920px;
+      background: #ffffff; color: #1f2937;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: var(--radius);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.9), 0 0 35px rgba(234, 108, 54, 0.15);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transform: scale(0.95);
+      transition: transform 0.25s ease;
+    }
+
+    .modal-backdrop.active .modal-box {
+      transform: scale(1);
+    }
+
+    .modal-top {
+      padding: 14px 20px;
+      background: #f8fafc; color: #1f2937;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .modal-title-text {
+      font-size: 1.05rem;
+      font-weight: 700;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .close-btn {
+      background: #f1f5f9; color: #64748b;
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .close-btn:hover {
+      background: #f43f5e;
+      border-color: #f43f5e;
+    }
+
+    .video-player-container {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #000;
+    }
+
+    .video-player-container iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .modal-bottom {
+      padding: 12px 20px;
+      background: #f8fafc; color: #64748b;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+    }
+
+    .yt-link {
+      color: var(--primary);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-weight: 600;
+    }
+
+    .yt-link:hover {
+      text-decoration: underline;
+    }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      header {
+        padding: 12px 16px;
+      }
+      .main-container {
+        padding: 20px 14px 0;
+      }
+      .hero-section h2 {
+        font-size: 1.6rem;
+      }
+      .video-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Header -->
+  <header>
+    <div class="brand">
+      <div class="brand-icon">
+        <i data-lucide="dumbbell" style="width: 22px; height: 22px;"></i>
+      </div>
+      <div class="brand-text">
+        <h1>FitPulse <span class="badge" style="background: rgba(234, 108, 54, 0.12); color: #ea6c36; border: 1px solid rgba(234, 108, 54, 0.3);">Video Vault</span></h1>
+        <p>50+ Exercise & Workout Tutorials</p>
+      </div>
+    </div>
+    <a href="/" style="text-decoration: none; color: #ea6c36; font-weight: 700; font-size: 13.5px; display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 8px; border: 1.5px solid #ea6c36; background: #fff7ed; transition: 0.2s;">
+      ← Back to Dashboard
+    </a>
+  </header>
+
+  <div class="main-container">
+    <!-- Hero Banner -->
+    <div class="hero-section">
+      <h2>Exercise & Workout Video Library</h2>
+      <p>Click any exercise card to launch the interactive video player popup with zero delay.</p>
+    </div>
+
+    <!-- Search & Filter Controls -->
+    <div class="controls-panel">
+      <div class="search-box">
+        <i data-lucide="search" style="width: 18px; height: 18px;"></i>
+        <input type="text" id="searchInput" placeholder="Search exercises, muscles (e.g. chest, squat, abs, biceps)...">
+      </div>
+
+      <div class="categories-list" id="categoryTabs">
+        <button class="category-btn active" data-category="all">All (55)</button>
+        <button class="category-btn" data-category="chest">Chest</button>
+        <button class="category-btn" data-category="back">Back</button>
+        <button class="category-btn" data-category="legs">Legs & Glutes</button>
+        <button class="category-btn" data-category="shoulders">Shoulders</button>
+        <button class="category-btn" data-category="arms">Arms</button>
+        <button class="category-btn" data-category="core">Abs & Core</button>
+        <button class="category-btn" data-category="hiit">HIIT & Cardio</button>
+        <button class="category-btn" data-category="mobility">Mobility & Yoga</button>
+      </div>
+    </div>
+
+    <div class="count-indicator" id="countLabel">Showing <strong>55</strong> workouts</div>
+
+    <!-- Video Grid -->
+    <div class="video-grid" id="videoGrid"></div>
+  </div>
+
+  <!-- Video Lightbox Popup Modal -->
+  <div class="modal-backdrop" id="videoModal" role="dialog" aria-modal="true">
+    <div class="modal-box">
+      <div class="modal-top">
+        <h3 class="modal-title-text" id="modalVideoTitle">Workout Video</h3>
+        <button class="close-btn" id="closeModalBtn" aria-label="Close">
+          <i data-lucide="x" style="width: 18px; height: 18px;"></i>
+        </button>
+      </div>
+
+      <div class="video-player-container">
+        <iframe 
+          id="playerIframe" 
+          src="" 
+          title="Exercise Video" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+          allowfullscreen>
+        </iframe>
+      </div>
+
+      <div class="modal-bottom">
+        <span id="modalMetaText">Target Muscle & Details</span>
+        <a id="modalDirectLink" href="#" target="_blank" rel="noopener noreferrer" class="yt-link">
+          Watch directly on YouTube <i data-lucide="external-link" style="width: 14px; height: 14px;"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 55 Curated Exercise YouTube Videos
+    const exercises = [
+      // Chest
+      { id: "vcBig73ojpE", title: "The Most Effective Way To Bench Press (Form & Setup)", category: "chest", target: "Chest & Triceps", channel: "Jeff Nippard", duration: "10:45" },
+      { id: "IODxDxX7oi4", title: "How to Do Push Ups Correctly (Avoid Mistakes)", category: "chest", target: "Chest & Core", channel: "Calisthenicsmovement", duration: "08:12" },
+      { id: "8iPEnn-ltC8", title: "Incline Dumbbell Bench Press Form Guide", category: "chest", target: "Upper Chest", channel: "Scott Herman", duration: "06:34" },
+      { id: "2z8JmcrW-As", title: "How To Do Dips (Avoid Shoulder Pain)", category: "chest", target: "Lower Chest & Triceps", channel: "Calisthenicsmovement", duration: "07:50" },
+      { id: "taI4XduLp4M", title: "Cable Crossover & Chest Flyes Technique", category: "chest", target: "Chest Isolation", channel: "RP Strength", duration: "05:22" },
+      { id: "_4EGPVJuE_E", title: "Diamond Push-Ups Tutorial for Triceps & Inner Chest", category: "chest", target: "Inner Chest & Triceps", channel: "Calisthenicsmovement", duration: "04:45" },
+      { id: "eE7dzM0ieq0", title: "Dumbbell Pullover: Target Chest vs Lats", category: "chest", target: "Chest & Serratus", channel: "Scott Herman", duration: "05:15" },
+
+      // Back
+      { id: "op9kVnSso6Q", title: "How To Deadlift: Pillars of Proper Form", category: "back", target: "Posterior Chain & Back", channel: "Alan Thrall", duration: "11:20" },
+      { id: "eGo4IYlbE5g", title: "How To Do Your First Pull-Up (Step-by-Step)", category: "back", target: "Lats & Biceps", channel: "Calisthenicsmovement", duration: "09:30" },
+      { id: "G8l_8chR5BE", title: "Bent-Over Barbell Row Form (Pendlay vs Standard)", category: "back", target: "Mid Back & Lats", channel: "Alan Thrall", duration: "08:45" },
+      { id: "CAwf7n6Luuc", title: "The Ultimate Lat Pulldown Technique Checklist", category: "back", target: "Lats", channel: "Jeff Nippard", duration: "07:18" },
+      { id: "GZbfZ033f74", title: "Seated Cable Row for Maximum Upper Back Growth", category: "back", target: "Rhomboids & Lats", channel: "RP Strength", duration: "06:10" },
+      { id: "pYcpY20QaE8", title: "Single-Arm Dumbbell Row Proper Technique", category: "back", target: "Lats & Upper Back", channel: "Scott Herman", duration: "05:40" },
+      { id: "rep-qVOkqgk", title: "Face Pulls: You Are Probably Doing Them Wrong!", category: "back", target: "Rear Delts & Traps", channel: "Jeff Nippard", duration: "06:55" },
+      { id: "fIWP-FRFNU0", title: "Inverted Rows: Master Your Bodyweight Pulling", category: "back", target: "Mid Back & Scapula", channel: "Calisthenicsmovement", duration: "06:05" },
+
+      // Legs
+      { id: "bEv6CCg2BC8", title: "How To Squat: The Complete Guide", category: "legs", target: "Quads & Glutes", channel: "Alan Thrall", duration: "13:40" },
+      { id: "jEy_czb3RKA", title: "Romanian Deadlift (RDL) Technique Masterclass", category: "legs", target: "Hamstrings & Glutes", channel: "Jeff Nippard", duration: "09:50" },
+      { id: "2C-uNgKwPLE", title: "The Perfect Bulgarian Split Squat Form", category: "legs", target: "Quads & Glutes", channel: "Squat University", duration: "07:15" },
+      { id: "IZxyjW7MPJQ", title: "Leg Press Foot Placement For Quads & Glutes", category: "legs", target: "Quads", channel: "RP Strength", duration: "06:40" },
+      { id: "L8fvypPrzzs", title: "Dumbbell Walking Lunges Form & Foot Placement", category: "legs", target: "Quads, Glutes & Balance", channel: "Scott Herman", duration: "05:30" },
+      { id: "SEdqd1n0cvg", title: "How To Barbell Hip Thrust For Max Glute Activation", category: "legs", target: "Glutes", channel: "Bret Contreras", duration: "08:15" },
+      { id: "MeIiIdhvXT4", title: "Goblet Squat Form Tutorial (Fix Your Depth)", category: "legs", target: "Quads & Mobility", channel: "Buff Dudes", duration: "05:05" },
+      { id: "gwLzBJYoWlI", title: "Standing Calf Raises: Full Range of Motion", category: "legs", target: "Calves", channel: "RP Strength", duration: "04:50" },
+      { id: "_qyxd3_w2vA", title: "Lying Leg Curls: Setup and Knee Alignment", category: "legs", target: "Hamstrings", channel: "Scott Herman", duration: "04:35" },
+
+      // Shoulders
+      { id: "2yjwXTZQDDI", title: "How To Overhead Press (OHP / Military Press)", category: "shoulders", target: "Front Delts & Shoulders", channel: "Alan Thrall", duration: "10:15" },
+      { id: "3VcKaXpzqRo", title: "Dumbbell Lateral Raises (The Most Scientific Guide)", category: "shoulders", target: "Side Deltoids", channel: "Jeff Nippard", duration: "08:30" },
+      { id: "qEwKCR5JCog", title: "Seated Dumbbell Shoulder Press Form", category: "shoulders", target: "Full Delts", channel: "Scott Herman", duration: "05:45" },
+      { id: "6Z15_WdXmVw", title: "Arnold Press Exercise Guide: Proper Rotation", category: "shoulders", target: "Anterior & Lateral Delts", channel: "Scott Herman", duration: "05:20" },
+      { id: "ttvfGg9d76c", title: "Rear Delt Dumbbell Flyes for 3D Shoulders", category: "shoulders", target: "Posterior Delts", channel: "RP Strength", duration: "06:12" },
+      { id: "VwX_l_gG0g8", title: "Front Dumbbell Raise: Target The Anterior Deltoids", category: "shoulders", target: "Front Delts", channel: "Scott Herman", duration: "04:40" },
+
+      // Arms
+      { id: "kwG2ipFRgfo", title: "Barbell Bicep Curls: Strict Form vs Cheating", category: "arms", target: "Biceps", channel: "Scott Herman", duration: "06:15" },
+      { id: "soxrZlIl35U", title: "Incline Dumbbell Curl: Maximum Bicep Stretch", category: "arms", target: "Long Head Biceps", channel: "Jeff Nippard", duration: "07:20" },
+      { id: "zC3nLlEvin4", title: "Hammer Curls: Build Forearm & Bicep Thickness", category: "arms", target: "Brachialis & Forearms", channel: "Scott Herman", duration: "05:10" },
+      { id: "-xa-6cQaZKY", title: "Tricep Rope Pushdowns: The Ultimate Guide", category: "arms", target: "Triceps Lateral Head", channel: "Jeff Nippard", duration: "06:45" },
+      { id: "d_KZxkY_0aw", title: "Skull Crushers: Lying Tricep Extensions Guide", category: "arms", target: "Triceps Long Head", channel: "Buff Dudes", duration: "06:30" },
+      { id: "0AUGkch3tzc", title: "Concentration Curls: Technique For The Bicep Peak", category: "arms", target: "Bicep Peak", channel: "Scott Herman", duration: "04:55" },
+      { id: "_gsUokN_Abc", title: "Overhead Dumbbell Triceps Extension Form Guide", category: "arms", target: "Triceps Long Head", channel: "Scott Herman", duration: "05:25" },
+      { id: "M_u01hF6kZc", title: "Preacher Curls: Full Range Bicep Isolation", category: "arms", target: "Short Head Biceps", channel: "RP Strength", duration: "05:50" },
+
+      // Abs & Core
+      { id: "ASdvN_XEl_c", title: "The Perfect Plank: How To Engage Your Core Fully", category: "core", target: "Core & Stability", channel: "Calisthenicsmovement", duration: "06:20" },
+      { id: "hdng3Nm1x_E", title: "Hanging Leg Raises: The Best Lower Ab Exercise", category: "core", target: "Lower Abs", channel: "Calisthenicsmovement", duration: "08:15" },
+      { id: "rqiTPdK1cjg", title: "Ab Wheel Rollout: Stop Hurting Your Lower Back!", category: "core", target: "Anterior Core", channel: "Athlean-X", duration: "07:45" },
+      { id: "9FGilxCbdz8", title: "Bicycle Crunches Proper Form for Obliques", category: "core", target: "Obliques & Core", channel: "Scott Herman", duration: "04:30" },
+      { id: "wkD8rjkodUI", title: "Russian Twists: Protect Your Spine & Build Abs", category: "core", target: "Rotational Core", channel: "Scott Herman", duration: "04:15" },
+      { id: "g_BYB0R-4Ws", title: "The Dead Bug: King of Core Stability", category: "core", target: "Deep Core Wall", channel: "Squat University", duration: "06:10" },
+      { id: "ll9GzQ_5B5A", title: "Hollow Body Hold Progression for Core Strength", category: "core", target: "Full Abdominal Wall", channel: "Calisthenicsmovement", duration: "06:40" },
+
+      // HIIT & Cardio
+      { id: "auBLPXO8Fww", title: "How to Do a Burpee Properly (Full Breakdown)", category: "hiit", target: "Full Body Conditioning", channel: "CrossFit", duration: "04:50" },
+      { id: "nmwgirgXLYM", title: "Mountain Climbers: High Intensity Core & Cardio", category: "hiit", target: "Core & Heart Rate", channel: "Scott Herman", duration: "04:20" },
+      { id: "sSESeQAir2M", title: "The Kettlebell Swing Masterclass (Hardstyle Swing)", category: "hiit", target: "Glutes & Cardio", channel: "Mark Wildman", duration: "11:10" },
+      { id: "u3zgHI8QnqE", title: "Jump Rope for Beginners: 5 Key Fundamentals", category: "hiit", target: "Calves & Agility", channel: "Jump Rope Dudes", duration: "09:15" },
+      { id: "ml6cT4AZdqI", title: "15-Minute Fat-Burning High Intensity HIIT Workout", category: "hiit", target: "Full Body Fat Burn", channel: "MadFit", duration: "15:20" },
+      { id: "ZZZoCnPKjIA", title: "High Knees Running in Place Cardio Form", category: "hiit", target: "Cardio & Hip Flexors", channel: "Bowflex", duration: "03:40" },
+
+      // Mobility & Yoga
+      { id: "v7AYKMP6rOE", title: "20-Minute Yoga For Complete Beginners", category: "mobility", target: "Full Body Yoga", channel: "Yoga With Adriene", duration: "23:10" },
+      { id: "g_tea8ZNk5A", title: "15-Minute Full Body Morning Stretch & Mobility", category: "mobility", target: "Full Body Flexibility", channel: "Mady Morrison", duration: "15:40" },
+      { id: "L_xrDAtykMI", title: "10-Minute Daily Hip Mobility Routine (Fix Tight Hips)", category: "mobility", target: "Hips & Pelvis", channel: "Tom Merrick", duration: "10:35" },
+      { id: "XvhcWzsmvU8", title: "Daily Hamstring Flexibility Routine (Touch Your Toes)", category: "mobility", target: "Hamstrings", channel: "Tom Merrick", duration: "11:50" },
+      { id: "g-7ZWPCWv0U", title: "How to Fix Rounded Shoulders and Forward Head", category: "mobility", target: "Posture & Spine", channel: "Jeremy Ethier", duration: "08:50" },
+      { id: "209N9N2k868", title: "Full Body Foam Rolling Guide for Muscle Soreness", category: "mobility", target: "Myofascial Release", channel: "Scott Herman", duration: "09:20" }
+    ];
+
+    let currentCategory = 'all';
+    let searchQuery = '';
+
+    const grid = document.getElementById('videoGrid');
+    const searchInput = document.getElementById('searchInput');
+    const categoryBtns = document.querySelectorAll('.category-btn');
+    const countLabel = document.getElementById('countLabel');
+
+    // Modal elements
+    const modal = document.getElementById('videoModal');
+    const iframe = document.getElementById('playerIframe');
+    const modalTitle = document.getElementById('modalVideoTitle');
+    const modalMeta = document.getElementById('modalMetaText');
+    const modalLink = document.getElementById('modalDirectLink');
+    const closeBtn = document.getElementById('closeModalBtn');
+
+    function openPlayer(item) {
+      modalTitle.textContent = item.title;
+      modalMeta.textContent = `${item.target} • Trainer: ${item.channel} • ${item.duration}`;
+      modalLink.href = `https://www.youtube.com/watch?v=${item.id}`;
+      // Autoplay in iframe
+      iframe.src = `https://www.youtube-nocookie.com/embed/${item.id}?autoplay=1&rel=0`;
+      
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      lucide.createIcons();
+    }
+
+    function closePlayer() {
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+      iframe.src = ''; // Stops audio and video immediately
+    }
+
+    closeBtn.addEventListener('click', closePlayer);
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closePlayer();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('active')) closePlayer();
+    });
+
+    function render() {
+      const filtered = exercises.filter(item => {
+        if (currentCategory !== 'all' && item.category !== currentCategory) return false;
+        if (searchQuery.trim()) {
+          const q = searchQuery.toLowerCase();
+          const matchTitle = item.title.toLowerCase().includes(q);
+          const matchTarget = item.target.toLowerCase().includes(q);
+          const matchChannel = item.channel.toLowerCase().includes(q);
+          if (!matchTitle && !matchTarget && !matchChannel) return false;
+        }
+        return true;
+      });
+
+      countLabel.innerHTML = `Showing <strong>${filtered.length}</strong> workouts`;
+
+      grid.innerHTML = filtered.map(item => `
+        <div class="video-card" onclick="window.playVideo('${item.id}')">
+          <div class="thumb-wrap">
+            <img src="https://img.youtube.com/vi/${item.id}/mqdefault.jpg" alt="${item.title}" loading="lazy">
+            <div class="play-btn-circle">
+              <div class="play-icon-box">
+                <i data-lucide="play" style="width: 22px; height: 22px; fill: #000; margin-left: 2px;"></i>
+              </div>
+            </div>
+            <span class="duration-tag">${item.duration}</span>
+          </div>
+          <div class="card-info">
+            <span class="card-badge">${item.category}</span>
+            <h4 class="card-title">${item.title}</h4>
+            <div class="card-meta">
+              <span>${item.channel}</span>
+              <span class="card-target">${item.target}</span>
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+      lucide.createIcons();
+    }
+
+    window.playVideo = function(id) {
+      const item = exercises.find(x => x.id === id);
+      if (item) openPlayer(item);
+    };
+
+    searchInput.addEventListener('input', (e) => {
+      searchQuery = e.target.value;
+      render();
+    });
+
+    categoryBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        categoryBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentCategory = btn.getAttribute('data-category');
+        render();
+      });
+    });
+
+    render();
+    lucide.createIcons();
+  </script>
+</body>
+</html>

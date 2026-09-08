@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240">
+  <defs>
+    <radialGradient id="bgGrad_6" cx="50%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#FFF7ED"/>
+      <stop offset="70%" stop-color="#FFEDD5"/>
+      <stop offset="100%" stop-color="#FFFFFF"/>
+    </radialGradient>
+    <linearGradient id="neonGrad_6" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#34d399"/>
+      <stop offset="100%" stop-color="#ff7d45"/>
+    </linearGradient>
+    <filter id="glow_6" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="5" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Card Background -->
+  <rect width="240" height="240" rx="36" fill="url(#bgGrad_6)"/>
+  <rect width="236" height="236" x="2" y="2" rx="34" fill="none" stroke="#34d399" stroke-width="2" opacity="0.4"/>
+  
+  <!-- Glowing Tech Orbit -->
+  <circle cx="120" cy="110" r="82" fill="none" stroke="#34d399" stroke-width="2.5" stroke-dasharray="12 6" opacity="0.6"/>
+  <circle cx="120" cy="110" r="74" fill="#FFFFFF" stroke="rgba(242,106,46,0.25)" stroke-width="1.5"/>
+
+  <!-- Stylized Trainer Silhouette / Avatar Core -->
+  <circle cx="120" cy="80" r="30" fill="url(#neonGrad_6)" opacity="0.88" filter="url(#glow_6)"/>
+  <!-- Trapezius and Torso -->
+  <path d="M72 152 C72 118 92 112 120 112 C148 112 168 118 168 152 C168 158 162 162 156 162 L84 162 C78 162 72 158 72 152 Z" fill="#34d399" opacity="0.95"/>
+  
+  <!-- Dumbbell Silhouette Accent -->
+  <rect x="52" y="104" width="136" height="6" rx="3" fill="#ffffff" opacity="0.9"/>
+  <rect x="42" y="90" width="12" height="34" rx="4" fill="#34d399"/>
+  <rect x="186" y="90" width="12" height="34" rx="4" fill="#34d399"/>
+  <rect x="36" y="95" width="8" height="24" rx="3" fill="#ffffff" opacity="0.7"/>
+  <rect x="196" y="95" width="8" height="24" rx="3" fill="#ffffff" opacity="0.7"/>
+
+  <!-- Initials Badge In Center -->
+  <circle cx="120" cy="110" r="24" fill="#FFF7ED" stroke="#34d399" stroke-width="2" filter="url(#glow_6)"/>
+  <text x="120" y="117" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="900" fill="#F26A2E" text-anchor="middle" letter-spacing="1">JJ</text>
+
+  <!-- Bottom Tag Pill -->
+  <rect x="36" y="194" width="168" height="26" rx="13" fill="#FFF7ED" stroke="#34d399" stroke-width="1.2"/>
+  <text x="120" y="211" font-family="'Plus Jakarta Sans', sans-serif" font-size="10.5" font-weight="800" fill="#34d399" text-anchor="middle" letter-spacing="1.2">CROSS TRAINING</text>
+</svg>

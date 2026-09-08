@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>FitDiet Planner - Windows Desktop</title>
+
+<style>
+    :root {
+      /* Palette: Vibrant Fitness Orange & Crisp Clean White */
+      --bg-outside: #f4f5f7;
+      --app-bg: #f8f9fa;
+      --sidebar-bg: #ffffff;
+      --bg-primary: #f8f9fa;
+      --bg: #f8f9fa;
+      
+      --card-bg: #ffffff;
+      --card-inner: #f8fafc;
+      --input-bg: #ffffff;
+      --border-color: #e2e8f0;
+      
+      --primary: #ea6c36;
+      --primary-hover: #ff8555;
+      --accent: #ea6c36;
+      
+      --text-main: #1f2937;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+    }
+
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:'Plus Jakarta Sans', 'Inter', Arial, sans-serif;background:var(--bg-outside);color:var(--text-main)}
+body{min-height:100vh}
+
+.app{
+  width:100%;
+  min-height:100vh;
+  background:var(--app-bg);
+  padding:0;
+  display:flex;
+  flex-direction:column;
+}
+
+header{
+  height:78px;
+  padding:16px 32px;
+  display:flex;
+  align-items:center;
+  gap:18px;
+  background:#ffffff;
+  border-bottom:1px solid #e2e8f0;
+  position:sticky;
+  top:0;
+  z-index:20;
+}
+h1{margin:0;font-size:26px;color:#ea6c36;font-weight:800}
+header .muted{font-size:14px;color:#64748b}
+
+main{display:block}
+
+section{
+  width:100%;
+  max-width:1280px;
+  margin:0 auto;
+  padding:26px 34px 50px;
+}
+
+.card{
+  background:#ffffff;
+  border-radius:16px;
+  padding:22px;
+  margin:14px 0;
+  border:1px solid #e2e8f0;
+  box-shadow:0 4px 14px rgba(0,0,0,.04);
+}
+.hero{
+  background:linear-gradient(135deg, #ea6c36 0%, #ff8555 100%) !important;
+  color:#ffffff !important;
+  border:none;
+}
+.hero h1, .hero h2, .hero h3{color:#ffffff !important}
+.hero .muted{color:rgba(255,255,255,0.9) !important}
+.hero .green{color:#ffedd5 !important;font-weight:800}
+
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.stat{background:#f8fafc;padding:16px;border-radius:14px;border:1px solid #e2e8f0}
+button{
+  border:0;border-radius:10px;padding:12px 16px;font-weight:bold;
+  cursor:pointer;transition:.15s ease;
+}
+button:hover{filter:brightness(1.06)}
+.primary{background:#ea6c36;color:#ffffff;width:auto;min-width:220px;margin-top:10px;box-shadow:0 4px 14px rgba(234, 108, 54, 0.35)}
+.primary:hover{background:#ff8555}
+.outline{background:#f8fafc;color:#1f2937;border:1px solid #e2e8f0}
+.back{
+  margin:0 0 14px;
+  width:auto;
+  text-align:left;
+  background:#ffffff;
+  color:#ea6c36;
+  border:1px solid #e2e8f0;
+  font-weight:700;
+}
+.back:hover{background:#fff7ed;border-color:#ea6c36}
+input,select{
+  width:100%;padding:13px;border-radius:10px;border:1px solid #e2e8f0;
+  background:#ffffff;color:#1f2937;margin:6px 0 12px;outline:none;
+}
+input:focus,select:focus{
+  border-color:#ea6c36;
+  box-shadow:0 0 0 3px rgba(234, 108, 54, 0.15);
+}
+label{font-size:13px;color:#475569;font-weight:600}
+.plan{
+  display:flex;align-items:center;gap:16px;cursor:pointer;
+  transition:.2s;min-height:82px;
+  background:#ffffff;border:1px solid #e2e8f0;
+}
+.plan:hover{transform:translateY(-2px);border-color:#ea6c36;box-shadow:0 6px 18px rgba(234, 108, 54, 0.12)}
+.plan:active{transform:scale(.99)}
+.emoji{font-size:36px}
+.arrow{margin-left:auto;font-size:28px;color:#ea6c36}
+nav{
+  position:fixed;
+  left:0;top:78px;bottom:0;
+  transform:none;
+  width:220px;
+  max-width:none;
+  display:flex;
+  flex-direction:column;
+  background:#ffffff;
+  border-right:1px solid #e2e8f0;
+  border-top:0;
+  padding:16px 12px;
+  z-index:15;
+}
+nav button{
+  flex:none;
+  width:100%;
+  min-height:58px;
+  background:transparent;
+  color:#64748b;
+  text-align:left;
+  padding:12px 18px;
+  border-radius:10px;
+  margin-bottom:8px;
+  font-weight:600;
+  border:1px solid transparent;
+}
+nav button:hover{background:#fff7ed;color:#ea6c36}
+nav button.active{color:#ea6c36;background:#fff7ed;border-color:rgba(234, 108, 54, 0.3);font-weight:800}
+.hidden{display:none!important}
+.meal,.exercise{display:flex;gap:14px;align-items:center}
+.meal div:nth-child(2),.exercise div:nth-child(2){flex:1}
+.icon{font-size:30px}
+.kcal{color:#ea6c36;white-space:nowrap;font-weight:700}
+.exercise-number{
+  width:38px;height:38px;border-radius:50%;background:#fff7ed;
+  display:flex;align-items:center;justify-content:center;
+  color:#ea6c36;font-weight:bold;flex:none;border:1px solid rgba(234, 108, 54, 0.25);
+}
+.tag{
+  display:inline-block;padding:6px 10px;background:#fff7ed;
+  border-radius:20px;font-size:12px;margin:3px;color:#ea6c36;border:1px solid rgba(234, 108, 54, 0.2);font-weight:600;
+}
+.section-title{margin:26px 0 10px;color:#1f2937}
+.info-box{background:#fff7ed;border-radius:15px;padding:15px;margin-top:12px;border:1px solid rgba(234, 108, 54, 0.25);color:#1f2937}
+.diet-total{text-align:center;font-size:13px;color:#64748b;margin-top:10px}
+.green{color:#ea6c36 !important;font-weight:700}
+.blue{color:#ea6c36 !important;font-weight:700}
+.muted{color:#64748b}
+
+/* Desktop content starts to the right of the sidebar */
+#home,#details,#diet,#gym{margin-left:220px;max-width:none}
+#home>.card,#details>.card,#diet>.card,#gym>.card{max-width:1180px}
+#plans,#dietPlans,#gymPlans{max-width:1180px}
+#plans{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+#plans .card,#dietPlans .card,#gymPlans .card{margin:0}
+#dietPlans,#gymPlans{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+#detailContent{max-width:1180px}
+
+@media(max-width:900px){
+  nav{width:180px}
+  #home,#details,#diet,#gym{margin-left:180px}
+  section{padding:22px}
+  #plans,#dietPlans,#gymPlans{grid-template-columns:1fr}
+}
+@media(max-width:650px){
+  header{padding:14px 18px;height:auto;flex-wrap:wrap}
+  nav{
+    top:auto;left:0;right:0;bottom:0;width:100%;height:72px;
+    flex-direction:row;border-right:0;border-top:1px solid #e2e8f0;
+    background:#ffffff;padding:8px;gap:4px;
+  }
+  nav button{margin:0;min-height:54px;text-align:center;padding:8px}
+  #home,#details,#diet,#gym{margin-left:0}
+  section{padding:18px 14px 90px}
+  .grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<header>
+<h1>FitDiet</h1>
+<div class="muted">Your personal health & fitness planner</div>
+<a href="/" style="margin-left:auto; text-decoration:none; color:#ea6c36; font-weight:700; font-size:13.5px; display:inline-flex; align-items:center; gap:6px; padding:8px 16px; border-radius:8px; border:1.5px solid #ea6c36; background:#fff7ed; transition:0.2s;">
+  ← Back to Dashboard
+</a>
+</header>
+
+
+<!-- ================= HOME ================= -->
+
+<section id="home">
+
+<div class="card hero">
+
+<div class="green">TODAY'S TARGET</div>
+
+<h2 id="homeCal">
+Calculate your target
+</h2>
+
+<div class="muted" id="homeProtein">
+Enter your details below
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>Automatic Calorie Calculator</h2>
+
+<label>Age</label>
+<input id="age" type="number" min="13" max="100"
+placeholder="e.g. 25">
+
+<label>Gender</label>
+
+<select id="gender">
+
+<option value="male">
+Male
+</option>
+
+<option value="female">
+Female
+</option>
+
+</select>
+
+
+<label>Height (cm)</label>
+
+<input id="height"
+type="number"
+placeholder="e.g. 175">
+
+
+<label>Weight (kg)</label>
+
+<input id="weight"
+type="number"
+placeholder="e.g. 70">
+
+
+<label>Activity level</label>
+
+<select id="activity">
+
+<option value="1.2">
+Sedentary — little exercise
+</option>
+
+<option value="1.375">
+Light — 1–3 days/week
+</option>
+
+<option value="1.55" selected>
+Moderate — 3–5 days/week
+</option>
+
+<option value="1.725">
+Very active — 6–7 days/week
+</option>
+
+<option value="1.9">
+Athlete — hard training
+</option>
+
+</select>
+
+
+<label>Goal</label>
+
+<select id="goal">
+
+<option value="loss">
+Weight Loss
+</option>
+
+<option value="maintain">
+Maintain Weight
+</option>
+
+<option value="gain">
+Weight Gain
+</option>
+
+<option value="muscle">
+Muscle Building
+</option>
+
+</select>
+
+
+<button class="primary"
+onclick="calculate()">
+
+Calculate My Calories
+
+</button>
+
+
+<div id="result" class="hidden">
+
+<div class="grid" style="margin-top:14px">
+
+<div class="stat">
+
+<small>BMR</small>
+<br>
+
+<b id="bmr"></b>
+
+</div>
+
+
+<div class="stat">
+
+<small>TDEE</small>
+<br>
+
+<b id="tdee"></b>
+
+</div>
+
+</div>
+
+
+<div class="card"
+style="margin:14px 0 0;background:linear-gradient(135deg, #ea6c36 0%, #ff8555 100%);color:#ffffff;">
+
+<small>
+Recommended target
+</small>
+
+<h2 id="target" class="green"></h2>
+
+<span id="advice" class="muted"></span>
+
+</div>
+
+</div>
+
+</div>
+
+
+<h2 class="section-title">
+Choose your goal
+</h2>
+
+<div id="plans"></div>
+
+</section>
+
+
+
+<!-- ================= DETAIL PAGE ================= -->
+
+<section id="details" class="hidden">
+
+<button class="back"
+onclick="goHome()">
+
+← Back
+
+</button>
+
+
+<div id="detailContent"></div>
+
+</section>
+
+
+
+<!-- ================= DIET PAGE ================= -->
+
+<section id="diet" class="hidden">
+
+<h2 style="margin:20px">
+🥗 Diet Plans
+</h2>
+
+<div id="dietPlans"></div>
+
+</section>
+
+
+
+<!-- ================= GYM PAGE ================= -->
+
+<section id="gym" class="hidden">
+
+<h2 style="margin:20px">
+🏋️ Gym Plans
+</h2>
+
+<div id="gymPlans"></div>
+
+</section>
+
+
+
+<!-- ================= NAVIGATION ================= -->
+
+<nav>
+
+<button id="nHome"
+class="active"
+onclick="show('home',this)">
+
+🏠
+<br>
+Home
+
+</button>
+
+
+<button id="nDiet"
+onclick="show('diet',this)">
+
+🥗
+<br>
+Diet
+
+</button>
+
+
+<button id="nGym"
+onclick="show('gym',this)">
+
+🏋️
+<br>
+Gym
+
+</button>
+
+</nav>
+
+</div>
+
+
+
+<script>
+
+/* =========================================
+   GOAL DATA
+========================================= */
+
+const goalData = {
+
+loss:{
+
+emoji:"🔥",
+
+title:"Weight Loss",
+
+subtitle:"Burn fat while maintaining muscle",
+
+calories:1600,
+
+protein:110,
+
+diet:[
+
+["🌅","Breakfast",
+"Oats + banana + 3 egg whites",
+350],
+
+["🥛","Mid Morning",
+"Greek yogurt + almonds",
+220],
+
+["🍗","Lunch",
+"Brown rice + grilled chicken + vegetables",
+500],
+
+["🍎","Evening Snack",
+"Apple + green tea",
+120],
+
+["🥗","Dinner",
+"2 chapati + paneer + large salad",
+410]
+
+],
+
+workout:[
+
+["1","Brisk Walking","30 minutes","Cardio"],
+
+["2","Bodyweight Squats","3 × 15","Legs"],
+
+["3","Push Ups","3 × 10","Chest"],
+
+["4","Mountain Climbers","3 × 20","Cardio"],
+
+["5","Plank","3 × 30 sec","Core"]
+
+],
+
+duration:"45–50 minutes"
+
+},
+
+
+gain:{
+
+emoji:"💪",
+
+title:"Weight Gain",
+
+subtitle:"Healthy calorie surplus for gradual weight gain",
+
+calories:2800,
+
+protein:130,
+
+diet:[
+
+["🌅","Breakfast",
+"Oats + milk + banana + peanut butter + 3 eggs",
+650],
+
+["🥜","Mid Morning",
+"Peanut butter sandwich + milk",
+400],
+
+["🍗","Lunch",
+"Rice + chicken + vegetables + curd",
+700],
+
+["🥤","Evening",
+"Banana shake + nuts",
+450],
+
+["🍛","Dinner",
+"Chapati + paneer + rice + vegetables",
+600]
+
+],
+
+workout:[
+
+["1","Barbell Squat","3 × 10","Legs"],
+
+["2","Bench Press","3 × 10","Chest"],
+
+["3","Lat Pulldown","3 × 10","Back"],
+
+["4","Shoulder Press","3 × 10","Shoulders"],
+
+["5","Bicep Curl","3 × 12","Arms"]
+
+],
+
+duration:"50–60 minutes"
+
+},
+
+
+muscle:{
+
+emoji:"🏋️",
+
+title:"Muscle Building",
+
+subtitle:"High-protein nutrition + strength training",
+
+calories:2400,
+
+protein:150,
+
+diet:[
+
+["🍳","Breakfast",
+"Oats + milk + 4 eggs + banana",
+550],
+
+["🥛","Mid Morning",
+"Greek yogurt + nuts",
+300],
+
+["🍗","Lunch",
+"Rice + chicken + vegetables + curd",
+650],
+
+["🥤","Pre/Post Workout",
+"Banana + whey protein",
+300],
+
+["🥗","Dinner",
+"Chapati + paneer + salad",
+600]
+
+],
+
+workout:[
+
+["1","Squat","4 × 8–10","Legs"],
+
+["2","Bench Press","4 × 8–10","Chest"],
+
+["3","Barbell Row","4 × 8–10","Back"],
+
+["4","Overhead Press","3 × 10","Shoulders"],
+
+["5","Bicep Curl","3 × 12","Arms"],
+
+["6","Triceps Pushdown","3 × 12","Triceps"]
+
+],
+
+duration:"60 minutes"
+
+},
+
+
+maintain:{
+
+emoji:"🥗",
+
+title:"Maintenance",
+
+subtitle:"Balanced nutrition for maintaining your weight",
+
+calories:2100,
+
+protein:120,
+
+diet:[
+
+["🍳","Breakfast",
+"2 eggs + oats + fruit",
+450],
+
+["🥛","Mid Morning",
+"Greek yogurt + fruit",
+200],
+
+["🍚","Lunch",
+"Rice + chicken + vegetables",
+550],
+
+["🍌","Evening",
+"Fruit + nuts",
+250],
+
+["🥗","Dinner",
+"Chapati + paneer + vegetables",
+550]
+
+],
+
+workout:[
+
+["1","Squats","3 × 12","Legs"],
+
+["2","Push Ups","3 × 12","Chest"],
+
+["3","Rows","3 × 12","Back"],
+
+["4","Lunges","3 × 10","Legs"],
+
+["5","Plank","3 × 30 sec","Core"]
+
+],
+
+duration:"40–50 minutes"
+
+}
+
+};
+
+
+
+/* =========================================
+   BASIC PLAN CARDS
+========================================= */
+
+const plans=[
+
+{
+id:"loss",
+e:"🔥",
+t:"Weight Loss",
+s:"Calorie-controlled meals"
+},
+
+{
+id:"gain",
+e:"💪",
+t:"Weight Gain",
+s:"High-calorie balanced meals"
+},
+
+{
+id:"muscle",
+e:"🏋️",
+t:"Muscle Building",
+s:"High-protein nutrition"
+},
+
+{
+id:"maintain",
+e:"🥗",
+t:"Maintenance",
+s:"Balanced everyday nutrition"
+}
+
+];
+
+
+
+/* =========================================
+   CREATE PLAN CARD
+========================================= */
+
+function planCard(p){
+
+return `
+
+<div class="card plan"
+onclick="openDetails('${p.id}')">
+
+<div class="emoji">
+${p.e}
+</div>
+
+<div>
+
+<b>${p.t}</b>
+
+<div class="muted">
+${p.s}
+</div>
+
+</div>
+
+<div class="arrow">
+›
+</div>
+
+</div>
+
+`;
+
+}
+
+
+
+/* =========================================
+   RENDER HOME PLANS
+========================================= */
+
+function renderPlans(){
+
+let html="";
+
+plans.forEach(p=>{
+
+html+=planCard(p);
+
+});
+
+document.getElementById("plans").innerHTML=html;
+
+}
+
+
+
+/* =========================================
+   OPEN DETAIL PAGE
+========================================= */
+
+function openDetails(id){
+
+const d=goalData[id];
+
+let dietHTML="";
+
+d.diet.forEach(meal=>{
+
+dietHTML+=`
+
+<div class="card meal"
+style="margin:8px 0">
+
+<div class="icon">
+${meal[0]}
+</div>
+
+<div>
+
+<b>${meal[1]}</b>
+
+<div class="muted">
+${meal[2]}
+</div>
+
+</div>
+
+<span class="kcal">
+${meal[3]} kcal
+</span>
+
+</div>
+
+`;
+
+});
+
+
+let workoutHTML="";
+
+d.workout.forEach(ex=>{
+
+workoutHTML+=`
+
+<div class="card exercise"
+style="margin:8px 0">
+
+<div class="exercise-number">
+${ex[0]}
+</div>
+
+<div>
+
+<b>${ex[1]}</b>
+
+<div class="muted">
+${ex[3]}
+</div>
+
+</div>
+
+<div>
+
+<b class="green">
+${ex[2]}
+</b>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+
+document.getElementById("detailContent").innerHTML=`
+
+<div class="card hero">
+
+<div style="font-size:45px">
+${d.emoji}
+</div>
+
+<h1>
+${d.title}
+</h1>
+
+<p class="muted">
+${d.subtitle}
+</p>
+
+
+<div class="grid">
+
+<div class="stat">
+
+<small>Calories</small>
+
+<h2 class="green">
+${d.calories} kcal
+</h2>
+
+</div>
+
+
+<div class="stat">
+
+<small>Protein</small>
+
+<h2 class="blue">
+${d.protein} g
+</h2>
+
+</div>
+
+</div>
+
+
+<div class="info-box">
+
+<b>🎯 Daily Target</b>
+
+<p class="muted">
+Aim for approximately
+${d.calories} calories and
+${d.protein}g protein per day.
+</p>
+
+</div>
+
+</div>
+
+
+<h2 class="section-title">
+🍽️ One Day Diet Plan
+</h2>
+
+${dietHTML}
+
+
+<div class="diet-total">
+
+Total daily calories are approximate.
+
+</div>
+
+
+<h2 class="section-title">
+🏋️ One Day Workout Plan
+</h2>
+
+
+<div class="card">
+
+<span class="tag">
+⏱️ ${d.duration}
+</span>
+
+<span class="tag">
+🔥 ${d.workout.length} exercises
+</span>
+
+</div>
+
+
+${workoutHTML}
+
+
+<div class="card hero">
+
+<h3>
+💡 Today's Tip
+</h3>
+
+<p class="muted">
+
+Stay consistent with your meals,
+drink enough water and focus on
+good exercise technique.
+
+</p>
+
+</div>
+
+`;
+
+
+showSection("details");
+
+}
+
+
+
+/* =========================================
+   CALORIE CALCULATOR
+========================================= */
+
+function calculate(){
+
+let a=+document.getElementById("age").value;
+
+let h=+document.getElementById("height").value;
+
+let w=+document.getElementById("weight").value;
+
+let act=+document.getElementById("activity").value;
+
+
+if(!a || !h || !w){
+
+alert(
+"Please enter age, height and weight."
+);
+
+return;
+
+}
+
+
+let bmr;
+
+if(
+document.getElementById("gender").value==="male"
+){
+
+bmr=
+10*w+
+6.25*h-
+5*a+
+5;
+
+}else{
+
+bmr=
+10*w+
+6.25*h-
+5*a-
+161;
+
+}
+
+
+let tdee=bmr*act;
+
+let goal=
+document.getElementById("goal").value;
+
+
+let target;
+
+if(goal==="loss"){
+
+target=tdee-400;
+
+}
+
+else if(
+goal==="gain" ||
+goal==="muscle"
+){
+
+target=tdee+300;
+
+}
+
+else{
+
+target=tdee;
+
+}
+
+
+let protein;
+
+if(goal==="loss"){
+
+protein=w*1.6;
+
+}
+
+else if(goal==="muscle"){
+
+protein=w*2;
+
+}
+
+else if(goal==="gain"){
+
+protein=w*1.8;
+
+}
+
+else{
+
+protein=w*1.5;
+
+}
+
+
+document.getElementById("bmr")
+.textContent=
+Math.round(bmr)+" kcal";
+
+
+document.getElementById("tdee")
+.textContent=
+Math.round(tdee)+" kcal";
+
+
+document.getElementById("target")
+.textContent=
+Math.round(target)+" kcal/day";
+
+
+document.getElementById("advice")
+.textContent=
+"Suggested protein: "+
+Math.round(protein)+
+" g/day";
+
+
+document.getElementById("homeCal")
+.textContent=
+Math.round(target)+" kcal/day";
+
+
+document.getElementById("homeProtein")
+.textContent=
+"Protein "+
+Math.round(protein)+
+"g • TDEE "+
+Math.round(tdee)+
+" kcal";
+
+
+document.getElementById("result")
+.classList.remove("hidden");
+
+}
+
+
+
+/* =========================================
+   SECTION NAVIGATION
+========================================= */
+
+function showSection(id){
+
+["home","diet","gym","details"].forEach(x=>{
+
+document.getElementById(x)
+.classList.toggle(
+"hidden",
+x!==id
+);
+
+});
+
+}
+
+
+/* =========================================
+   BOTTOM NAVIGATION
+========================================= */
+
+function show(id,btn){
+
+showSection(id);
+
+document
+.querySelectorAll("nav button")
+.forEach(x=>
+x.classList.remove("active")
+);
+
+btn.classList.add("active");
+
+}
+
+
+/* =========================================
+   BACK BUTTON
+========================================= */
+
+function goHome(){
+
+showSection("home");
+
+document
+.querySelectorAll("nav button")
+.forEach(x=>
+x.classList.remove("active")
+);
+
+document
+.getElementById("nHome")
+.classList.add("active");
+
+}
+
+
+
+/* =========================================
+   DIET PAGE
+========================================= */
+
+function renderDiet(){
+
+let html="";
+
+plans.forEach(p=>{
+
+html+=planCard(p);
+
+});
+
+document.getElementById("dietPlans")
+.innerHTML=html;
+
+}
+
+
+
+/* =========================================
+   GYM PAGE
+========================================= */
+
+function renderGym(){
+
+let html="";
+
+plans.forEach(p=>{
+
+const d=goalData[p.id];
+
+html+=`
+
+<div class="card plan"
+onclick="openDetails('${p.id}')">
+
+<div class="emoji">
+🏋️
+</div>
+
+<div>
+
+<b>${d.title} Workout</b>
+
+<div class="muted">
+${d.duration} • ${d.workout.length} exercises
+</div>
+
+</div>
+
+<div class="arrow">
+›
+</div>
+
+</div>
+
+`;
+
+});
+
+document.getElementById("gymPlans")
+.innerHTML=html;
+
+}
+
+
+
+/* =========================================
+   START APP
+========================================= */
+
+renderPlans();
+
+renderDiet();
+
+renderGym();
+
+</script>
+
+</body>
+</html>
